@@ -1,0 +1,35 @@
+[package]
+name = "polymarket_scanner"
+version = "0.2.0"
+edition = "2021"
+authors = ["be1uga"]
+description = "A Rust-based scanner for Polymarket prediction markets"
+keywords = ["polymarket", "blockchain", "prediction-markets", "scanner"]
+license = "MIT"
+
+[dependencies]
+# HTTP 客户端
+reqwest = { version = "0.11", features = ["json", "blocking"] }
+# 异步运行时
+tokio = { version = "1.35", features = ["full"] }
+# JSON 序列化
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+# 错误处理
+anyhow = "1.0"
+thiserror = "1.0"
+# 日志
+log = "0.4"
+env_logger = "0.11"
+# 时间处理
+chrono = { version = "0.4", features = ["serde"] }
+# 配置
+dotenv = "0.15"
+# Redis 数据库
+redis = { version = "0.24", features = ["tokio-comp", "connection-manager"] }
+# 异步互斥锁
+parking_lot = "0.12"
+
+[dev-dependencies]
+tokio-test = "0.4"
+
