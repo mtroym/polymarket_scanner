@@ -1,9 +1,12 @@
 use crate::error::{Result, ScannerError};
+use crate::storage::Storage;
 use crate::types::{Market, MarketEvent, EventType};
+use async_trait::async_trait;
 use chrono::{DateTime, Utc};
 use log::{info, debug};
 use sqlx::sqlite::{SqlitePool, SqlitePoolOptions};
 use sqlx::Row;
+use std::collections::HashMap;
 
 pub struct Database {
     pool: SqlitePool,
@@ -22,9 +25,12 @@ impl Database {
         
         Ok(Self { pool })
     }
-    
+}
+
+#[async_trait]
+impl Storage for Database {
     /// 初始化数据库表
-    pub async fn init_schema(&self) -> Result<()> {
+    async fn init(&self) -> Result<()> {
         info!("初始化数据库表结构");
         
         // 创建市场表
@@ -120,7 +126,7 @@ impl Database {
     }
     
     /// 保存或更新市场数据
-    pub async fn save_market(&self, market: &Market) -> Result<()> {
+    async fn save_market(&self, market: &Market) -> Result<()> {
         let now = Utc::now().to_rfc3339();
         
         // 检查市场是否已存在
@@ -207,7 +213,7 @@ impl Database {
     }
     
     /// 保存市场事件
-    pub async fn save_event(&self, event: &MarketEvent) -> Result<()> {
+    async fn save_event(&self, event: &MarketEvent) -> Result<()> {
         let event_type_str = match event.event_type {
             EventType::NewMarket => "NewMarket",
             EventType::PriceChange => "PriceChange",
@@ -240,7 +246,7 @@ impl Database {
     }
     
     /// 保存价格历史
-    pub async fn save_price_history(&self, condition_id: &str, outcome_prices: &str, volume: Option<&str>) -> Result<()> {
+    async fn save_price_history(&self, condition_id: &str, outcome_prices: &str, volume: Option<&str>) -> Result<()> {
         let now = Utc::now().to_rfc3339();
         
         sqlx::query(
@@ -261,7 +267,7 @@ impl Database {
     }
     
     /// 获取市场总数
-    pub async fn get_market_count(&self) -> Result<i64> {
+    async fn get_market_count(&self) -> Result<i64> {
         let count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM markets")
             .fetch_one(&self.pool)
             .await
@@ -271,7 +277,7 @@ impl Database {
     }
     
     /// 获取事件总数
-    pub async fn get_event_count(&self) -> Result<i64> {
+    async fn get_event_count(&self) -> Result<i64> {
         let count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM market_events")
             .fetch_one(&self.pool)
             .await
@@ -281,7 +287,7 @@ impl Database {
     }
     
     /// 获取特定市场的价格历史
-    pub async fn get_price_history(&self, condition_id: &str, limit: i32) -> Result<Vec<(String, String, DateTime<Utc>)>> {
+    async fn get_price_history(&self, condition_id: &str, limit: i32) -> Result<Vec<(String, String, DateTime<Utc>)>> {
         let rows = sqlx::query(
             r#"
             SELECT outcome_prices, volume, timestamp
@@ -313,7 +319,7 @@ impl Database {
     }
     
     /// 获取最近的事件
-    pub async fn get_recent_events(&self, limit: i32) -> Result<Vec<(String, String, String, DateTime<Utc>)>> {
+    async fn get_recent_events(&self, limit: i32) -> Result<Vec<(String, String, String, DateTime<Utc>)>> {
         let rows = sqlx::query(
             r#"
             SELECT event_type, question, outcome_prices, timestamp
@@ -341,6 +347,69 @@ impl Database {
         }
         
         Ok(events)
+    }
+
+    /// 获取市场详情
+    async fn get_market(&self, condition_id: &str) -> Result<Option<Market>> {
+        let row = sqlx::query(
+            "SELECT * FROM markets WHERE condition_id = ?"
+        )
+        .bind(condition_id)
+        .fetch_optional(&self.pool)
+        .await
+        .map_err(|e| ScannerError::ConfigError(format!("查询市场失败: {}", e)))?;
+
+        if let Some(row) = row {
+            let market = Market {
+                condition_id: row.get("condition_id"),
+                question_id: row.get("question_id"),
+                question: row.get("question"),
+                description: row.get("description"),
+                market_slug: row.get("market_slug"),
+                outcomes: row.get("outcomes"),
+                outcome_prices: row.get("outcome_prices"),
+                volume: row.get("volume"),
+                liquidity: row.get("liquidity"),
+                end_date: row.get("end_date"),
+                active: row.get::<Option<i32>, _>("active").map(|v| v != 0),
+                closed: row.get::<Option<i32>, _>("closed").map(|v| v != 0),
+            };
+            Ok(Some(market))
+        } else {
+            Ok(None)
+        }
+    }
+
+    /// 获取所有市场 ID
+    async fn get_all_market_ids(&self) -> Result<Vec<String>> {
+        let rows = sqlx::query("SELECT condition_id FROM markets")
+            .fetch_all(&self.pool)
+            .await
+            .map_err(|e| ScannerError::ConfigError(format!("获取市场列表失败: {}", e)))?;
+        
+        let ids = rows.iter().map(|row| row.get("condition_id")).collect();
+        Ok(ids)
+    }
+
+    /// 获取事件统计
+    async fn get_event_stats(&self) -> Result<HashMap<String, i64>> {
+        let rows = sqlx::query("SELECT event_type, COUNT(*) as count FROM market_events GROUP BY event_type")
+            .fetch_all(&self.pool)
+            .await
+            .map_err(|e| ScannerError::ConfigError(format!("获取事件统计失败: {}", e)))?;
+        
+        let mut stats = HashMap::new();
+        let mut total = 0;
+        
+        for row in rows {
+            let event_type: String = row.get("event_type");
+            let count: i64 = row.get("count");
+            stats.insert(event_type, count);
+            total += count;
+        }
+        
+        stats.insert("Total".to_string(), total);
+        Ok(stats)
     }
 }
 

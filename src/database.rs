@@ -1,9 +1,12 @@
 use crate::error::{Result, ScannerError};
+use crate::storage::Storage;
 use crate::types::{Market, MarketEvent, EventType};
+use async_trait::async_trait;
 use chrono::{DateTime, Utc};
 use log::{info, debug};
 use redis::aio::ConnectionManager;
 use redis::AsyncCommands;
+
 
 pub struct Database {
     conn: ConnectionManager,
@@ -25,14 +28,30 @@ impl Database {
         Ok(Self { conn })
     }
     
+    /// 清空所有数据（慎用）
+    #[allow(dead_code)]
+    pub async fn flush_all(&self) -> Result<()> {
+        let mut conn = self.conn.clone();
+        redis::cmd("FLUSHDB")
+            .query_async::<_, ()>(&mut conn)
+            .await
+            .map_err(|e| ScannerError::ConfigError(format!("清空数据库失败: {}", e)))?;
+        
+        info!("Redis 数据库已清空");
+        Ok(())
+    }
+}
+
+#[async_trait]
+impl Storage for Database {
     /// 初始化 Redis（可选，Redis 不需要 schema）
-    pub async fn init_schema(&self) -> Result<()> {
+    async fn init(&self) -> Result<()> {
         info!("Redis 初始化完成（无需创建表结构）");
         Ok(())
     }
     
     /// 保存或更新市场数据
-    pub async fn save_market(&self, market: &Market) -> Result<()> {
+    async fn save_market(&self, market: &Market) -> Result<()> {
         let mut conn = self.conn.clone();
         let key = format!("market:{}", market.condition_id);
         let now = Utc::now().to_rfc3339();
@@ -87,7 +106,7 @@ impl Database {
     }
     
     /// 保存市场事件
-    pub async fn save_event(&self, event: &MarketEvent) -> Result<()> {
+    async fn save_event(&self, event: &MarketEvent) -> Result<()> {
         let mut conn = self.conn.clone();
         
         let event_type_str = match event.event_type {
@@ -121,32 +140,22 @@ impl Database {
             .await
             .map_err(|e| ScannerError::ConfigError(format!("修剪事件列表失败: {}", e)))?;
         
-        // 添加到特定市场的事件列表
-        // let market_events_key = format!("market:{}:events", event.market.condition_id);
-        // let _: () = conn.lpush(&market_events_key, &event_json)
-        //     .await
-        //     .map_err(|e| ScannerError::ConfigError(format!("保存市场事件失败: {}", e)))?;
+        // 增加事件计数器
+        let counter_key = format!("stats:events:{}", event_type_str);
+        let _ = conn.incr::<_, _, i64>(&counter_key, 1)
+            .await
+            .ok();
         
-        // let _: () = conn.ltrim(&market_events_key, 0, 99)
-        //     .await
-        //     .ok();
-        
-        // // 增加事件计数器
-        // let counter_key = format!("stats:events:{}", event_type_str);
-        // let _: () = conn.incr(&counter_key, 1)
-        //     .await
-        //     .ok();
-        
-        // let _: () = conn.incr("stats:events:total", 1)
-        //     .await
-        //     .ok();
+        let _ = conn.incr::<_, _, i64>("stats:events:total", 1)
+            .await
+            .ok();
         
         // debug!("保存事件: {} - {}", event_type_str, event.market.question);
         Ok(())
     }
     
     /// 保存价格历史
-    pub async fn save_price_history(
+    async fn save_price_history(
         &self,
         condition_id: &str,
         outcome_prices: &str,
@@ -172,22 +181,11 @@ impl Database {
             .await
             .map_err(|e| ScannerError::ConfigError(format!("保存价格历史失败: {}", e)))?;
         
-        // 只保留最近 1000 条记录
-        // let count: i64 = conn.zcard(&key)
-        //     .await
-        //     .unwrap_or(0);
-        
-        // if count > 1000 {
-        //     let _: () = conn.zremrangebyrank(&key, 0, count - 1001)
-        //         .await
-        //         .ok();
-        // }
-        
         Ok(())
     }
     
     /// 获取市场总数
-    pub async fn get_market_count(&self) -> Result<i64> {
+    async fn get_market_count(&self) -> Result<i64> {
         let mut conn = self.conn.clone();
         let count: i64 = conn.scard("markets:all")
             .await
@@ -197,7 +195,7 @@ impl Database {
     }
     
     /// 获取事件总数
-    pub async fn get_event_count(&self) -> Result<i64> {
+    async fn get_event_count(&self) -> Result<i64> {
         let mut conn = self.conn.clone();
         let count: i64 = conn.get("stats:events:total")
             .await
@@ -207,7 +205,7 @@ impl Database {
     }
     
     /// 获取特定市场的价格历史
-    pub async fn get_price_history(
+    async fn get_price_history(
         &self,
         condition_id: &str,
         limit: i32,
@@ -239,7 +237,7 @@ impl Database {
     }
     
     /// 获取最近的事件
-    pub async fn get_recent_events(&self, limit: i32) -> Result<Vec<(String, String, String, DateTime<Utc>)>> {
+    async fn get_recent_events(&self, limit: i32) -> Result<Vec<(String, String, String, DateTime<Utc>)>> {
         let mut conn = self.conn.clone();
         
         let results: Vec<String> = conn.lrange("events:recent", 0, (limit - 1) as isize)
@@ -266,8 +264,7 @@ impl Database {
     }
     
     /// 获取市场详情
-    #[allow(dead_code)]
-    pub async fn get_market(&self, condition_id: &str) -> Result<Option<Market>> {
+    async fn get_market(&self, condition_id: &str) -> Result<Option<Market>> {
         let mut conn = self.conn.clone();
         let key = format!("market:{}", condition_id);
         
@@ -310,8 +307,7 @@ impl Database {
     }
     
     /// 获取所有市场 ID
-    #[allow(dead_code)]
-    pub async fn get_all_market_ids(&self) -> Result<Vec<String>> {
+    async fn get_all_market_ids(&self) -> Result<Vec<String>> {
         let mut conn = self.conn.clone();
         let ids: Vec<String> = conn.smembers("markets:all")
             .await
@@ -321,8 +317,7 @@ impl Database {
     }
     
     /// 获取事件统计
-    #[allow(dead_code)]
-    pub async fn get_event_stats(&self) -> Result<std::collections::HashMap<String, i64>> {
+    async fn get_event_stats(&self) -> Result<std::collections::HashMap<String, i64>> {
         let mut conn = self.conn.clone();
         let mut stats = std::collections::HashMap::new();
         
@@ -342,18 +337,5 @@ impl Database {
         stats.insert("Total".to_string(), total);
         
         Ok(stats)
-    }
-    
-    /// 清空所有数据（慎用）
-    #[allow(dead_code)]
-    pub async fn flush_all(&self) -> Result<()> {
-        let mut conn = self.conn.clone();
-        redis::cmd("FLUSHDB")
-            .query_async::<_, ()>(&mut conn)
-            .await
-            .map_err(|e| ScannerError::ConfigError(format!("清空数据库失败: {}", e)))?;
-        
-        info!("Redis 数据库已清空");
-        Ok(())
     }
 }

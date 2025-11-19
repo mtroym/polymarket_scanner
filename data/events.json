@@ -1,0 +1,904 @@
+{
+  "events": [
+    {
+      "market": {
+        "conditionId": "0xe3b423dfad8c22ff75c9899c4e8176f628cf4ad4caa00481764d320e7415f7a9",
+        "questionID": null,
+        "question": "Will Joe Biden get Coronavirus before the election?",
+        "description": "This is a market on if presidential candidate Joe Biden will test positive for COVID-19 before November 3rd, 2020. This will be defined as Joe publicly announcing - via any medium, including social media - that he has tested positive for COVID-19, or some variation of that statement. If it is in reference to antibodies, or he doesn’t publicly acknowledge it, the market will resolve to No.\nIn the event of ambiguity in terms of the market outcome, the market will be resolved at the sole discretion of the Markets Integrity Committee (MIC).",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "32257.445115",
+        "liquidity": "0",
+        "endDate": "2020-11-04T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401227Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x44f10d1cd5aaed4b7ae0b5edb76790f54f45dc0bcaa86831c83d865c774fbb90",
+        "questionID": null,
+        "question": "Will Airbnb begin publicly trading before Jan 1, 2021?",
+        "description": "This market is on whether or not Airbnb will be a publicly traded company by January 1, 2021. This market will resolve to Yes if Airbnb starts publicly trading on NASDAQ or NYSE before January 1st 2021, regardless of if they list via IPO, direct listing, or some other method. If they are not listed and publicly trading on one of those 2 stock exchanges, the market will resolve to \"No\". In the event of ambiguity in terms of the market outcome, the market will be resolved at the sole discretion of the Markets Integrity Committee (MIC).\n",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "89665.252158",
+        "liquidity": "0",
+        "endDate": "2021-01-02T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401292Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x3e0524de013d9dc359f5eb370773f25de2f03d3200294cfd0fa7dac2f399d101",
+        "questionID": null,
+        "question": "Will a new Supreme Court Justice be confirmed before Nov 3rd, 2020?",
+        "description": "This is a market on whether or not a new Supreme Court Justice will be both nominated and confirmed before Nov 3rd, 2020. Nominated and Confirmed, in the context of the Supreme Court, are defined here: https://en.wikipedia.org/wiki/Appointment_and_confirmation_to_the_Supreme_Court_of_the_United_States. If a Supreme Court Justice is Nominated but not Confirmed before the election, the market will resolve to “No”. RIP RBG. In the event of ambiguity in terms of the market outcome, the market will be resolved at the sole discretion of the Markets Integrity Committee (MIC).",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "43279.456005",
+        "liquidity": "0",
+        "endDate": "2020-11-04T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401296Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x9b946f54f3428aafc308c33aa04a943fe13a011bdac9a9b66e1ba16c416ca256",
+        "questionID": null,
+        "question": "Will Kim Kardashian and Kanye West divorce before Jan 1, 2021?",
+        "description": "This is a market on whether Kanye West and Kim Kardashian will officially file for a divorce before January 1st 2021. Divorce can be defined empirically as either an official announcement direct from either Kim or Kanye, or an official filing of divorce, including but not limited to certified copies of divorce decrees available from the Superior Court in the county where the decree was granted. This market will resolve \"Yes\" if the aforementioned conditions are met and \"No\" otherwise. In the event of ambiguity in terms of the market outcome, the market will be resolved at the sole discretion of the Markets Integrity Committee (MIC).\n",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0.000001011082052522541417308141468657552\", \"0.9999989889179474774585826918585313\"]",
+        "volume": "22067.475119",
+        "liquidity": "0.179651",
+        "endDate": "2021-01-02T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401299Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x5d1a1ab716fd06943441fe27cde0089651ce769bec55e191b6953468a0e9f0d0",
+        "questionID": null,
+        "question": "Will Coinbase begin publicly trading before Jan 1, 2021?",
+        "description": "This market is on whether Coinbase will be a publicly traded company by January 1, 2021. This market will resolve to Yes if Coinbase starts publicly trading on NASDAQ or NYSE before January 1st 2021. Regardless of if they list via IPO or direct listing. If they are not listed and publicly trading on one of those 2 exchanges, the market will resolve to \"No\". In the event of ambiguity in terms of the market outcome, the market will be resolved at the sole discretion of the Markets Integrity Committee (MIC).\n",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0.000001024519509568169644816863666886675\", \"0.9999989754804904318303551831363331\"]",
+        "volume": "116803.377183",
+        "liquidity": "0.367501",
+        "endDate": "2021-01-02T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401307Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0xd903891c2b9046cae14615afc4c5245370143503f7b2dfc13919acee07a1696d",
+        "questionID": null,
+        "question": "What will the price of Bitcoin be on November 4th, 2020?",
+        "description": "This is a scalar market on what the USD price of Bitcoin will be on November 4th, 2020, according to Coingecko. The lower bound for this market is $5,000/BTC, and the upper bound is $15,000/BTC - you can use the calculator to the right (underneath the Buy modal) to calculate how each Long or Short share price corresponds with the BTC price. The market will be settled according to Coingecko’s BTC page at roughly 12pm EST on November 4th, 2020. Long and Short shares will settle proportional to the final value, in the case of the final value being between these bounds, but if the final value exceeds either the upper or lower bound, the price of each Outcome Share is capped at $1. Refer to calculator for share price and BTC price correlation. In the event of ambiguity in terms of the market outcome, the market will be resolved at the sole discretion of the Markets Integrity Committee (MIC).\n",
+        "marketSlug": null,
+        "outcomes": "[\"Long\", \"Short\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "59755.804763",
+        "liquidity": "0",
+        "endDate": "2020-11-04T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401311Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0xf2e631ea675c5b09caea0bf65cf7887e25907af2657c8c907f02d9afbff20d05",
+        "questionID": null,
+        "question": "Will Trump win the 2020 U.S. presidential election?",
+        "description": "This is a market on if Donald Trump will win the 2020 US presidential election. This is not about the popular vote - it's particularly about if Trump will win the election, as defined by the electoral college system, and set to still be president come next term. Market will resolve to “Yes” if Donald Trump receives the required number of electoral votes to win the presidency, whenever it is called. If Joe Biden or any other candidate is declared the winner of this election officially, this market will resolve to “No”. Note: If the election winner is not declared on election night, this market will not resolve until a winner is confirmed.The resolution source will be https://www.cnn.com/election/2020 CNN's 2020 Election page: Additional note: in the event of conflicting sources between CNN and WSJ (https://www.wsj.com/livecoverage/campaign-wire-election-2020) or Associated Press (https://apnews.com/hub/election-2020), the market will only be resolved once there is a definitive winner. In the event of ambiguity in terms of the market outcome, the market will be resolved at the sole discretion of the Markets Integrity Committee (MIC).\n",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0.00000004364303498046286702037228176483457\", \"0.9999999563569650195371329796277182\"]",
+        "volume": "10802601.987023",
+        "liquidity": "68.283267",
+        "endDate": "2020-11-20T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401314Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0xfa8cc293e14872fca0c7e8b240360683e392e1d7a4b5ac7616b1f7e50c454ad2",
+        "questionID": null,
+        "question": "Will there be an Emergency Use Authorization (EUA) granted for a COVID-19 vaccine prior to Nov 3 2020?",
+        "description": "This market is on if there will be an Emergency Use Authorization (EUA) granted for a COVID-19 vaccine before November 3rd, 2020. \"The Emergency Use Authorization (EUA) authority allows FDA to help strengthen the nation’s public health protections against CBRN threats by facilitating the availability and use of MCMs needed during public health emergencies.\" The market will resolve to \"Yes\" if an EUA is granted for a COVID-19 vaccine, according to this link: https://www.fda.gov/emergency-preparedness-and-response/mcm-legal-regulatory-and-policy-framework/emergency-use-authorization#covid19euas, before November 3rd, 2020 (election day). Even if the vaccine is not widely distributed by that date, if an EUA is granted, the market will resolve to \"Yes\". If no EUA is granted for a vaccine by November 3rd, 2020, the market will resolve “No”. Note, this market is only for vaccines, not general treatment. In the event of ambiguity in terms of the market outcome, the market will be resolved at the sole discretion of the Markets Integrity Committee (MIC).\n",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "21881.05833",
+        "liquidity": "0",
+        "endDate": "2020-11-04T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401317Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x7333b6e016f7f60d86f15f11ed0b41b69deec0b6d73b86933639b1f39a545d87",
+        "questionID": null,
+        "question": "What will the total value locked (TVL) in DeFi be at the end of 2020, according to DefiPulse?",
+        "description": "This is a scalar market on what the TVL metric on [Defipulse.com] (http://defipulse.com/) will be on December 31st, 2020. TVL stands for the Total Value of cryptoassets Locked as collateral in the most prominent defi protocols and applications, and is the most prolific metric in regards to tracking the growth and success of DeFi. In the past few months, the TVL has been rapidly growing, showing no signs of slowing down. This market forecasts the perceived growth of DeFi by the year's end. The lower bound of this market is $8 Billion, and upper bound is $20 Billion - the market will resolve proportionally to the bounds according to what the TVL is at 12pm EST, December 31st, 2020. Reference the calculator and Buy modal to the right to better understand how the prices of outcome shares correlates to the bounds of this scalar market. In the event of ambiguity in terms of the market outcome, the market will be resolved at the sole discretion of the Markets Integrity Committee (MIC).\n",
+        "marketSlug": null,
+        "outcomes": "[\"Long\", \"Short\"]",
+        "outcomePrices": "[\"0.5843311669077693146635445446077281\", \"0.4156688330922306853364554553922719\"]",
+        "volume": "46944.579746",
+        "liquidity": "4.601742",
+        "endDate": "2021-01-02T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401328Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0xb2eecb8d14e871c5b82a3b037fc5f8b703c218e41aa578c8e870244585b9db78",
+        "questionID": null,
+        "question": "What will the USD price of Filecoin ($FIL) be on November 17th, 2020?",
+        "description": "This is a scalar market on what the USD price of 1 Filecoin ($FIL) will be on November 17th, 2020, at 2pm EST, according to Coingecko. The lower bound for this market is $10/FIL, and the upper bound is $50/FIL - you can use the calculator to the right (underneath the Buy modal) to calculate how each Long or Short share price corresponds with the FIL price. Long and Short shares will settle proportionally in the case of the final value being between these bounds, but if the final value exceeds either the upper or lower bound, the price of each Outcome Share is capped at $1. Refer to calculator. In the event of ambiguity in terms of the market outcome, the market will be resolved at the sole discretion of the Markets Integrity Committee (MIC).\n",
+        "marketSlug": null,
+        "outcomes": "[\"Long\", \"Short\"]",
+        "outcomePrices": "[\"0.4988929462743076960451117056339252\", \"0.5011070537256923039548882943660748\"]",
+        "volume": "69947.098531",
+        "liquidity": "190.134841",
+        "endDate": "2020-11-17T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401333Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x3afe074f2b831c7a4b6817a2a0121e143db78b59f18c1e5ae5957ba53899c1aa",
+        "questionID": null,
+        "question": "Will Drake release a new studio album before the end of 2020?",
+        "description": "This is a market on if Drake will release a new studio album before the end of 2020. A studio album in this case can be defined as a new project on his Spotify page in the Albums section, with 8 or more songs and a release date in 2020. This market begins in October 2020, thus Dark Lane Demo Tapes does not count. This market will resolve to “Yes” if a studio album is released and is available via Spotify for streaming prior to 11:59PM EST on Dec 31, 2020. If a studio album is not released on Spotify by the aforementioned date, this market will resolve “No.” In the event of ambiguity in terms of the market outcome, the market will be resolved at the sole discretion of the Markets Integrity Committee (MIC).\n",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "31841.386373",
+        "liquidity": "0",
+        "endDate": "2021-01-02T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401342Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0xc64973cf7a20b3b114af9d918960f47cd1a70f2119819f7a434dfedc977560f0",
+        "questionID": null,
+        "question": "Which party will win Florida in the 2020 presidential election?",
+        "description": "This is a market on which party will win Florida in the 2020 presidential election. This market will resolve based on the information made available by the Florida Division of Elections. Official results for the General Election to be held on November 3, 2020 will be available and certified on November 17, 2020. In the event of a recount or other unforeseen delay, the market will not resolve until the final information is published and certified by the Florida Division of Elections. \n\nNote: Dems = Democrats and Reps = Republicans. Names were shortened for the sake of space. In the event of ambiguity in terms of the market outcome, the market will be resolved at the sole discretion of the Markets Integrity Committee (MIC).",
+        "marketSlug": null,
+        "outcomes": "[\"Dems\", \"Reps\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "243053.252109",
+        "liquidity": "0",
+        "endDate": "2020-11-20T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401345Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x15ab6203f3d170e3db1282986f2bf38f6d17e63ba4ae8393d05ba5902ebb42db",
+        "questionID": null,
+        "question": "How many confirmed Coronavirus cases will there be at EOY in the USA?",
+        "description": "This is a scalar market on the number of confirmed coronavirus cases there will be at the end of 2020 in the United States, according to https://coronavirus.jhu.edu/map.html. The lower bound for this market is 9 million and the upper bound is 15 million - you can use the calculator to the right (underneath the Buy modal) to calculate how each Long or Short share price corresponds with number of confirmed cases. The market will be settled according to https://coronavirus.jhu.edu/map.html at roughly 12am EST on January 1st, 2021. Long and Short shares will settle proportional to the final value, in the case of the final value being between these bounds, but if the final value exceeds either the upper or lower bound, the price of each Outcome Share is capped at $1. Refer to calculator. In the event of ambiguity in terms of the market outcome, the market will be resolved at the sole discretion of the Markets Integrity Committee (MIC).",
+        "marketSlug": null,
+        "outcomes": "[\"Long\", \"Short\"]",
+        "outcomePrices": "[\"0.9999688709703679916078209460980032\", \"0.00003112902963200839217905390199679565\"]",
+        "volume": "72112.484035",
+        "liquidity": "1.937475",
+        "endDate": "2021-01-02T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401349Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x49f8ecc29c12ec5ed2a5085bb152b052dc8d5611389f0f2ffe66390404a9b782",
+        "questionID": null,
+        "question": "Who will win the 2020 MLB World Series?",
+        "description": "This is a market on which team will win the 2020 Major League Baseball world series. The World Series is the annual championship series of Major League Baseball in the United States and Canada, contested since 1903 between the champion teams of the American League and the National League. The two 2020 contenders are the Tampa Bay Rays and the Los Angeles Dodgers. This market will resolve according to the team that first wins 4 games of this 7 game series.",
+        "marketSlug": null,
+        "outcomes": "[\"Rays\", \"Dodgers\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "107601.586423",
+        "liquidity": "0",
+        "endDate": "2020-10-29T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401353Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0xde12c76b349c3b90ed4855ad22ee2e6f794b5c440de91388d86ace1dd0da358f",
+        "questionID": null,
+        "question": "Will Dharma’s Phase 1 Retroactive UNI Distribution proposal pass?",
+        "description": "This is a market on if Dharma’s “Phase 1” Uniswap (UNI) governance proposal, described as “Retroactive UNI Distribution”, will pass. As of the date of market creation, 10-21-20, Dharma has announced their intention to submit a UNI governance proposal on October 23rd, 2020, for essentially airdropping UNI to users who traded on Uniswap through  applications like Dharma, prior to the UNI airdrop snapshot. “Phase 1 includes users of the application integrations”. The Phase 1 proposal can be empirically defined as a UNI governance proposal submitted in late October 2020, that encompasses airdropping UNI retroactively to users of apps that had integrated Uniswap. This market will resolve to “Yes” if this proposal is successfully passed, and “No” in any other case. This market will resolve once the 7 day voting period after the proposal is finished.",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "35661.941003",
+        "liquidity": "0",
+        "endDate": "2020-10-31T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401357Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x1eb44a4bc1927ce53afd89826def6b5752eaeb384726b4eb4ff31349b1e6523f",
+        "questionID": null,
+        "question": "Will there be a federal charge filed against Hunter Biden before 2021?",
+        "description": "This is a market on whether Hunter Biden, son of former U.S. Vice President Joe Biden, shall be indicted or otherwise formally charged with a federal crime, as publicly confirmed on or before December 31, 2020 by an authorized representative of the charging agency(ies) or judicial venue(s). If he is charged with a federal crime, before December 31, 2020, this market will resolve “Yes” if he is charged with any crime that is not a federal crime or is not charged with any crimes, this market will resolve “No”.",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0.0000002365760136311761420505896616707271\", \"0.9999997634239863688238579494103383\"]",
+        "volume": "127476.154269",
+        "liquidity": "0.13149",
+        "endDate": "2021-01-02T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401377Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x7b02c10a310f38be83ae0dbbb5caa96722a69ae1488b1ac5c2003bccd70ac021",
+        "questionID": null,
+        "question": "Will BTC break $15k before 2021?",
+        "description": "This is a market on whether BTC (bitcoin) will reach a price higher than USD $15,000 before the end of the 2020 calendar year according to coinmarketcap.com. If bitcoin reaches a price higher than $15,000 this market will be resolved to “Yes” shortly thereafter. If bitcoin does not reach a price higher than $15,000 by 11:59 PM ET Dec 31, 2020, this market will resolve to “No”.",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "224706.488667",
+        "liquidity": "0",
+        "endDate": "2021-01-01T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401380Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x128dd10748d92137d5057bed92b6c187c0a000a9a94f1a75d4a618b09eac629b",
+        "questionID": null,
+        "question": "Will Khabib win his UFC 254 Fight?",
+        "description": "This is a market on whether Khabib Nurmagomedov will win his UFC 254 fight against Justin Gaethje. If Khabib Nurmagomedov is declared the winner of this bout, either by knockout or by judgement, this market will resolve “Yes.” If Justin Gaethje is declared the winner, or this fight is declared a draw, this market will resolve to “No”.\n",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "17497.115264",
+        "liquidity": "0",
+        "endDate": "2020-10-25T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401383Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0xdc9bc87850a00c051c902f6d10355ec6412a08a56aa2e81b59beb3e9b80a11b3",
+        "questionID": null,
+        "question": "Will 538 outperform The Economist in forecasting the 2020 Presidential Election?",
+        "description": "This is a market on whether 538 will outperform The Economist in forecasting the 2020 Presidential Election. This market will be resolved by comparing the Brier score of 538 and the Economist averaged over all N=51 races. The calculation is further explained here: https://www.metaculus.com/questions/5503/comparing-538-and-economist-forecasts-in-2020/. This market resolves to \"Yes\" if the Brier score for the 51 races is lower for 538's probabilities than for The Economist's probabilities. The resolution source is based on downloading each model's \"model outputs\" from their respective websites at 1400 UTC 02-Nov-2020. This market will be resolved in the exact same way the aforementioned Metaculus question thread, given that the result is calculated to the satisfaction of the Market Integrity Committee.",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "81312.461764",
+        "liquidity": "0",
+        "endDate": "2020-11-20T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401386Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x780c0f4d66006c95e346b3fdb296707b234aba1a00e7acba6323d1c2f856b6f9",
+        "questionID": null,
+        "question": "Who will win the 2020 League of Legends World Championship?",
+        "description": "This is a market on which team will win the 2020 league of legends world championship, taking place on October 31st, 2020. The two teams competing are SN Gaming (Suning) and Damwon. Whichever team wins the Championship will have their shares become worth $1. If the game gets postponed, this market will not be resolved until the match takes place. If for some reason neither team wins, the market will resolve with both outcome shares being worth $.50 cents. This market will resolve according to the information published at https://lolesports.com/news following the match. ",
+        "marketSlug": null,
+        "outcomes": "[\"Damwon\", \"Suning\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "84205.451739",
+        "liquidity": "0",
+        "endDate": "2021-11-01T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401389Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x080a58fb24fbea95a744adb41c1eb2d321be81cd571d17185ecbe0eda19cf21a",
+        "questionID": null,
+        "question": "Which party will win Pennsylvania in the 2020 presidential election?",
+        "description": "This is a market on which party will win Pennsylvania in the 2020 presidential election. This market will resolve based on the information made available by the Pennsylvania Department of State and [https://www.electionreturns.pa.gov/](https://www.electionreturns.pa.gov/). Official results for the General Election to be held on November 3, 2020 will be available shortly thereafter. In the event of a recount or other unforeseen delay, the market will not resolve until the final information is published and certified by the Pennsylvania Department of State.\n\nNote: Dems = Democrats and Reps = Republicans. Names were shortened for the sake of space.\n\nIn the event of ambiguity in terms of the market outcome, the market will be resolved at the sole discretion of the Markets Integrity Committee (MIC).\n\nAddition: State markets on Polymarket (Georgia, Pennsylvania, Arizona, North Carolina), as per their consistent resolution conditions, will be kept open until the results are certified by each respective state’s Secretary of State. They may be kept open for automatic recounts, in which case they will be closed once the recount is complete and the results are made public. If certifications are delayed due to litigation, the market will remain open, but once the results are certified and any automatic recount is complete, markets will not be kept open in the case of further litigation. Markets may be extended or closed at the sole discretion of the Market Integrity Committee (MIC).",
+        "marketSlug": null,
+        "outcomes": "[\"Democratic\", \"Republican\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "1421876.344845",
+        "liquidity": "0",
+        "endDate": null,
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401392Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x3a28635bce8cf50695662a828248ed73b01e6c55e9ce54a967451281669aeb78",
+        "questionID": null,
+        "question": "Which party will win Texas in the 2020 presidential election?",
+        "description": "This is a market on which party will win Texas in the 2020 presidential election. This market will resolve based on the information made available by the Elections Division of the Texas  Secretary of State’s Office. Official results for the General Election to be held on November 3, 2020 will be available in the following days. In the event of a recount or other unforeseen delay, the market will not resolve until the final information is published and certified by the Elections Division of the Texas Secretary of State’s Office. Note: Dems = Democrats and Reps = Republicans. Names were shortened for the sake of space. In the event of ambiguity in terms of the market outcome, the market will be resolved at the sole discretion of the Markets Integrity Committee (MIC).\n",
+        "marketSlug": null,
+        "outcomes": "[\"Democratic\", \"Republican\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "194336.890284",
+        "liquidity": "0",
+        "endDate": "2020-11-20T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401395Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x8a5b6ae9b967ce2a154bfe07a9db6034bb3bc11f432a57c1ab8ae21c51ff1837",
+        "questionID": null,
+        "question": "Which party will win North Carolina in the 2020 presidential election?",
+        "description": "This is a market on which party will win North Carolina in the 2020 presidential election. This market will resolve based on the information made available by the North Carolina State Board of Elections. Official results for the General Election to be held on November 3, 2020 will be available in the following days. In the event of a recount or other unforeseen delay, the market will not resolve until the final information is published and certified by the North Carolina State Board of Elections. Note: Dems = Democrats and Reps = Republicans. Names were shortened for the sake of space. In the event of ambiguity in terms of the market outcome, the market will be resolved at the sole discretion of the Markets Integrity Committee (MIC).\n\nAddition: State markets on Polymarket (Georgia, Pennsylvania, Arizona, North Carolina), as per their consistent resolution conditions, will be kept open until the results are certified by each respective state’s Secretary of State. They may be kept open for automatic recounts, in which case they will be closed once the recount is complete and the results are made public. If certifications are delayed due to litigation, the market will remain open, but once the results are certified and any automatic recount is complete, markets will not be kept open in the case of further litigation. Markets may be extended or closed at the sole discretion of the Market Integrity Committee (MIC).\n",
+        "marketSlug": null,
+        "outcomes": "[\"Democratic\", \"Republican\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "244840.590497",
+        "liquidity": "0",
+        "endDate": null,
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401398Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x10ee8590fc06e7ce83463337f6bd3b38cee702667bd291712fcda5081e5e2a8d",
+        "questionID": null,
+        "question": "Which party will win Georgia in the 2020 presidential election?",
+        "description": "This is a market on which party will win Georgia in the 2020 presidential election. This market will resolve based on the information made available by the Elections Division of the Georgia Secretary of State’s Office. Official results for the General Election to be held on November 3, 2020 will be available in the following days . In the event of a recount or other unforeseen delay, the market will not resolve until the final information is published and certified by the Elections Division of the Georgia Secretary of State’s Office. Note: Dems = Democrats and Reps = Republicans. Names were shortened for the sake of space. In the event of ambiguity in terms of the market outcome, the market will be resolved at the sole discretion of the Markets Integrity Committee (MIC).\n\nAddition: State markets on Polymarket (Georgia, Pennsylvania, Arizona, North Carolina), as per their consistent resolution conditions, will be kept open until the results are certified by each respective state’s Secretary of State. They may be kept open for automatic recounts, in which case they will be closed once the recount is complete and the results are made public. If certifications are delayed due to litigation, the market will remain open, but once the results are certified and any automatic recount is complete, markets will not be kept open in the case of further litigation. Markets may be extended or closed at the sole discretion of the Market Integrity Committee (MIC).",
+        "marketSlug": null,
+        "outcomes": "[\"Democratic\", \"Republican\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "1253550.166932",
+        "liquidity": "0",
+        "endDate": null,
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401401Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x1411e65d309cfa0a748328b159ae593a4cbddbb76aecbf0086d24eef06aa6843",
+        "questionID": null,
+        "question": "Which party will win Arizona in the 2020 Presidential Election?",
+        "description": "This is a market on which party will win Arizona in the 2020 presidential election. This market will resolve based on the information made available by the Elections Division of the Arizona Secretary of State’s Office. Official results for the General Election to be held on November 3, 2020 will be available in the following days. In the event of a recount or other unforeseen delay, the market will not resolve until the final information is published and certified by the Elections Division of the Arizona Secretary of State’s Office. Note: Dems = Democrats and Reps = Republicans. Names were shortened for the sake of space. In the event of ambiguity in terms of the market outcome, the market will be resolved at the sole discretion of the Markets Integrity Committee (MIC).\n\nAddition: State markets on Polymarket (Georgia, Pennsylvania, Arizona, North Carolina), as per their consistent resolution conditions, will be kept open until the results are certified by each respective state’s Secretary of State. They may be kept open for automatic recounts, in which case they will be closed once the recount is complete and the results are made public. If certifications are delayed due to litigation, the market will remain open, but once the results are certified and any automatic recount is complete, markets will not be kept open in the case of further litigation. Markets may be extended or closed at the sole discretion of the Market Integrity Committee (MIC).\n",
+        "marketSlug": null,
+        "outcomes": "[\"Democratic\", \"Republican\"]",
+        "outcomePrices": "[\"0.9999928071628365951114292824952643\", \"0.000007192837163404888570717504735668924\"]",
+        "volume": "1506034.746644",
+        "liquidity": "5.470261",
+        "endDate": null,
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401404Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x47f9555fa286a9cabb9de41d66ae5220a194a49dcc1084ded95af63c809f4c0b",
+        "questionID": null,
+        "question": "Will Donald Trump tweet announcing that he won the election before November 5th 2020?",
+        "description": "This is a market on if Donald Trump will tweet an announcement that he successfully won the election before November 5th, 12:01 am EST. If Trump says he “Won”, or claims definitive victory, this market will resolve to “Yes”. If he claims he won before the market resolution time, but later admits to losing or informally or formally concedes before November 5th, that will overrule his previous claim of winning, and the market will resolve to “No”.  If he claims something to the effect of that it looks like he is going to win, or he should win, or *should’ve* won, the market will resolve to “No”. The Tweet must be in the form of an announcement claiming victory, not a tweet about rejecting official results and that he should be the winer. If he rejects the results as being insufficient in some way or needing a recount, but does not definitively claim he Won, in the fashion of claiming victory, the market will resolve to “No”. If the election hasn’t been called yet by resolution time, and Trump has not definitively claimed victory, the market will resolve to “No”. If Trump wins and announces it via Tweet before resolution time, the market will resolve to “Yes”. It boils down to Trump tweeting definitively that he successfully won, not that the results are wrong and he should’ve won: it must resemble a victory tweet. This tweet must come from one of his official Twitter accounts, either https://twitter.com/POTUS or\nhttps://twitter.com/realDonaldTrump and does not include Retweets. We're aware this is not the most unambiguous metric to resolve the market on, however the Market Integrity Committee will resolve this market in good faith as objectively accurate as possible.",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0.000001969126198486787442291877571524744\", \"0.9999980308738015132125577081224285\"]",
+        "volume": "127490.669491",
+        "liquidity": "3.295904",
+        "endDate": "2020-11-05T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401407Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x9129b6cb16ec8f79fd92d0d3377c554bb17fd31589bfef607f5bba1de5218a28",
+        "questionID": null,
+        "question": "Will the Associated Press publish a tweet calling the 2020 US presidential election before November 6?",
+        "description": "This is a market on whether the Associated Press twitter account, https://twitter.com/AP, will publish a tweet declaring a definitive winner of the 2020 US presidential election prior to 11:59PM EST on November 5th, 2020.\n\nResolution of this market will be unaffected by the aforementioned tweet later being deleted. This market will resolve to “Yes” if a tweet is published no matter the outcome of the election they declare. If no tweet is published by Nov 6th this market will resolve to “No”.",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "261432.197705",
+        "liquidity": "0",
+        "endDate": "2020-11-06T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401410Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0xa415326794437d158e8e8a4d9db412b09a31e8b585996f1bad817ee3162588b0",
+        "questionID": null,
+        "question": "Will the Ethereum 2.0 Genesis Event happen successfully on December 1st, 2020?",
+        "description": "This is a market on if the Ethereum 2.0 Beacon Chain genesis event will happen successfully on December 1st, 2020, as planned contingent on the ETH deposit threshold being met in time. The ETH 2 “MIN_GENESIS_TIME” is December 1, 2020, 12pm UTC. If the genesis event doesn’t happen by December 1st, 11:59pm EST, this market will resolve to “No” - and in the unlikely scenario that it happens before November 30th, 11:59pm UTC, the market will also resolve to “No”. The threshold for the genesis event to occur on December 1st is for there to be at least 16,384 32-ETH validator deposits, 7 days prior to December 1st. If the threshold is met, and the genesis event doesn’t happen successfully before resolution time due to unforeseen circumstances, the market will still resolve to “No”. For more information, read this blog post https://blog.ethereum.org/2020/11/04/eth2-quick-update-no-19/ and the hyperlinked smart contract and documentation in it. The resolution source is specified as the official Ethereum blog, but in the case of there not being a definitive answer there, other reputable, on-chain referencing resolution sources would be considered. In the event of ambiguity in regards to the resolution of this market, the Markets Integrity Committee (MIC) will resolve it in good faith in the most accurate way possible.\n",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0.9999991353509498666949062749530927\", \"0.0000008646490501333050937250469073407429\"]",
+        "volume": "560270.423771",
+        "liquidity": "7.877976",
+        "endDate": "2020-12-02T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401413Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0xa670159e0a8868ed1ca0013cf026805c1c5ffbf778a1d5030218471620211222",
+        "questionID": null,
+        "question": "Will $BTC break $20k before 2021?",
+        "description": "This is a market on if the USD price of Bitcoin $BTC will be above $20,000 at any point before January 1st, 2021, 12:00am EST, according to Coinmarketcap.com/currencies/bitcoin. This market starts on November 6th, 2020. This market will resolve to \"Yes\" whenever BTC breaks $20,000 according to Coinmarketcap, and if that condition is not met by January 1st, 2021, it will resolve to \"No\". In the event of ambiguity in terms of the market outcome, the market will be resolved in good faith at the sole discretion of the Markets Integrity Committee (MIC).",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0.9999998888806886895302218251805338\", \"0.000000111119311310469778174819466201224\"]",
+        "volume": "1467610.681134",
+        "liquidity": "1170.706736",
+        "endDate": "2021-01-01T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401416Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0xa23e60a31b36c537605edf9eebb3e2be252046f1ffb19ade09f97d47429b5470",
+        "questionID": null,
+        "question": "Will Donald Trump formally concede the 2020 US Election before December 1st, 2020?",
+        "description": "This is a market on if Donald Trump will formally concede the 2020 US Election before December 1st, 2020, 12:00am EST. Conceding can be defined as publicly admitting to losing the election and thus not being president come next term. As per Wikipedia: \"In politics, a concession is the act of a losing candidate publicly yielding to a winning candidate after an election after the overall result of the vote has become clear.\" If Trump tweets or publicly states that he lost or concedes the US Presidential Election, and will not be President come next term, this market will resolve to \"Yes\". If he says something to the effect of Joe Biden winning \"but...\", but in the context of him still contesting results, saying he should have won and he is taking action to try and still win, this market will resolve to \"No\". We are aware this market may be ambiguous, however it will be resolved in good faith as accurately as possible, by the Markets Integrity Committee (MIC). Also this Facebook Forecast question, https://www.forecastapp.net/q/TWFya2V0Ollwd0JkSUlOdzRB/, will be referenced as a leading resolution source, along with the Associated Press.",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0.0000001590260745451327528785858607902578\", \"0.9999998409739254548672471214141392\"]",
+        "volume": "454342.990794",
+        "liquidity": "8688.076983",
+        "endDate": "2020-12-01T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401447Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0xaf3282bade49b72710ee874b7975af821cdb64408e965c21700db35e6a207003",
+        "questionID": null,
+        "question": "Will LaMelo Ball be the first pick in the 2020 NBA draft?",
+        "description": "This is a market on if LaMelo Ball will be chosen/drafted with the 1st pick of the 2020 NBA Draft, currently owned by the Minnesota Timberwolves. This market will resolve to “Yes” if he is chosen 1st, and “No” if he is not. The 2020 NBA Draft takes place on November 18th, 2020, but if for some reason it is postponed, this market will stay active until the 1st official pick of the draft is made. In the event of ambiguity in terms of the outcome of this market, it will be resolved in good faith at the discretion of the Markets Integrity Committee (MIC).",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "143938.782615",
+        "liquidity": "0",
+        "endDate": "2020-11-19T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401450Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x54e378137aba7b5e2a6629faefb773fe1754b28f0a2282ed748e494545727cee",
+        "questionID": null,
+        "question": "Will Kanye West release a new studio album before 2021?",
+        "description": "This is a market on if Kanye West will release a new studio album before December 31st, 11:59pm EST. A studio album in this case can be defined as a new project on his Spotify page in the Albums section, with 8 or more songs and a release date in 2020. This market begins on November 11th, 2020, therefore any previous albums do not qualify. This market will resolve to “Yes” if a studio album is released and is available via Spotify for streaming prior to 11:59PM EST on Dec 31, 2020. If a studio album is not released on Spotify by the aforementioned date, this market will resolve “No.” The market will be resolved in good faith at the sole discretion of the Markets Integrity Committee (MIC).",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "54154.420953",
+        "liquidity": "0",
+        "endDate": "2021-01-01T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401456Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0xf845fae0304d7c0e02f3928ead5f58936e087286f9eb220221689be292b51d18",
+        "questionID": null,
+        "question": "Will Donald Trump attend Joe Biden’s inauguration ceremony in person?",
+        "description": "This is a market on if Donald Trump will attend Joe Biden’s inauguration ceremony in person.\nThis market is based on the linked Forecast question (https://forecastapp.net/q/TWFya2V0OlJpZXFKYTBGQU5n). This market will be resolved in good faith, with the primary resolution source being the linked Forecast question above. This market will resolve to \"Yes\" if Donald Trump attends the swearing-in ceremony of Joe Biden's presidential inauguration in person, according to both sources deemed appropriate by the Forecast team, or empirically by watching the inauguration on a livestream. In any case of Donald Trump not attending Joe Biden's official inauguration, the market will resolve to \"No\". In the case that the inauguration takes place in some form of hybrid online/in-person ceremony, if Trump is not physically present at the in-person segment of this, in the same place as Joe Biden, the market resolves to “No.” \n\nIf, for any reason, Biden is not inaugurated, the market will resolve to \"No\". This includes if Trump is inaugurated instead: the market will still resolve to \"No\". The swearing-in ceremony is a publicly televised event and it will be abundantly clear whether or not Donald Trump is present based on the media coverage of inauguration day. Televised video coverage from various outlets will be used to verify his attendance. If no inauguration takes place before February 1st, 2021, this market will resolve to \"No\". In the case of any ambiguity in regards to the market resolution, it will be resolved in good faith by the Markets Integrity Committee (MIC).",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0.000001942077472449333536950040644049163\", \"0.999998057922527550666463049959356\"]",
+        "volume": "192840.874875",
+        "liquidity": "54.798207",
+        "endDate": "2021-02-01T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401458Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0xa3d1b46ac7ebfaf90925fddf1b8eb5d2e6ac074acbae28b927a96519c19d12a0",
+        "questionID": null,
+        "question": "What will Airbnb's market cap be at close on its 1st day publicly trading?",
+        "description": "This is a scalar market on what Airbnb's market capitalization will be upon market close on its first day publicly trading, denominated in $USD and according to Google Finance. Airbnb is set to start trading soon, likely on the NASDAQ under the ticker $ABNB. The lower bound for this market is $20 billion, and the upper bound is $60 billion. You can use the calculator to the right (underneath the Buy modal) to calculate how each Long or Short Token price corresponds with Airbnb's market cap. Long and Short shares will settle proportionally to the outcome value if the final value is between these bounds, but if the final value exceeds either the upper or lower bound, the price of each Outcome Token is capped at $1 and $0. In the event of ambiguity in terms of the market outcome, the market will be resolved in good faith at the sole discretion of the Markets Integrity Committee (MIC).",
+        "marketSlug": null,
+        "outcomes": "[\"Long\", \"Short\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "114807.198845",
+        "liquidity": "0",
+        "endDate": null,
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401464Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x4afe273cde9f431f55621c666b7552f11cb8acbc36e06c39ea7e87564a02b34a",
+        "questionID": null,
+        "question": "Will Donald Trump be inaugurated for his second term as President of the USA on Inauguration Day, January 20th, 2021?",
+        "description": "This is a market on if Donald Trump will be inaugurated for his second term as President of the United States of America, on Inauguration Day—January 20th, 2021. At the time of market creation, AP, CNN, WSJ, Fox, and more have called the election for Joe Biden as the winner, and formally declared him the president-elect, however Trump vows to contest the result legally. \n\nInauguration Day is the day when the newly elected President is sworn in, and takes place at the beginning of every new term, regardless of if it is a new president, or the incumbent president is entering their second term. It has taken place on January 20th every time since 1937, unless it’s been a Sunday, which it is not in 2021. In the highly unlikely event the Inauguration Day date is changed to any other day before February 1st, 2021, it will be treated as the official Inauguration Day and resolution date for this market, and the same conditions will apply. \n\nThis market will not resolve, under any circumstances, until the resolution date—Inauguration Day. If Joe Biden, or anyone else other than Donald Trump, is inaugurated that day as President of the USA, the market will resolve to “No”. If Trump claims he is still president, but is not officially inaugurated on Inauguration Day, the market will resolve to “No”. If for any reason, Trump is not inaugurated for the next term before February 1st, 2021, the market will resolve to “No”. If he is officially inaugurated for his second term on Inauguration Day the market will resolve to \"Yes\". The resolution source will be https://www.usa.gov/presidents#item-37462 and https://www.whitehouse.gov/about-the-white-house/presidents/, both official government sources.",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0.00000002062666446044317342534367877456536\", \"0.9999999793733355395568265746563212\"]",
+        "volume": "30207577.413504",
+        "liquidity": "43.468918",
+        "endDate": "2021-02-01T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401467Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x26db7bd60779c008fe75ad575d53b4bbab32101ead3fd8e005f057d5547ddc26",
+        "questionID": null,
+        "question": "Will Trump win any of Pennsylvania, Arizona or Georgia?",
+        "description": "This is a market on whether Donald Trump will win the popular vote in the 2020 general election for U.S. President in one or more of the states of Pennsylvania, Arizona or Georgia. The linked PredictIt question is the basis for the creation of this market and will be referenced as the leading resolution source, [https://www.predictit.org/markets/detail/6956/Will-Trump-win-any-of-Pennsylvania,-Arizona-or-Georgia](https://www.predictit.org/markets/detail/6956/Will-Trump-win-any-of-Pennsylvania,-Arizona-or-Georgia). This market will resolve when the PredictIt market is resolved, to the same outcome.",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0.00001256598978506225299776995142702761\", \"0.999987434010214937747002230048573\"]",
+        "volume": "1376323.081579",
+        "liquidity": "2.945378",
+        "endDate": "2021-01-23T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401470Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x466c0923487b199c6d60d533bcabde40fe6ba848d96116fb9465ab55fc50ca5d",
+        "questionID": null,
+        "question": "Will any art piece on Superrare sell for more than $100k before 2021?",
+        "description": "This is a market, done in collaboration with Superrare, on if any single piece of digital art (NFT) on [Superrare.co](https://superrare.co) will be sold, via either primary or secondary sale, for more than $100,000 (according to USD market price of ETH at time of sale displayed on Superrare), by December 31st, 11:59pm EST. The sale must be confirmed and executed on-chain and be visible on the Superrare website, where the USD price displayed must exceed $100,000. This market will resolve to “Yes” once a sale that meets these conditions occurs, and “No” if the resolution date is reached and the conditions have yet to be met. The market will be resolved according to the aforementioned conditions, in collaboration with the Superrare team.",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0.000009633486254782601225458388917248024\", \"0.9999903665137452173987745416110828\"]",
+        "volume": "44204.852746",
+        "liquidity": "0.000056",
+        "endDate": "2020-01-01T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401472Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x42fe32be346eef59ded4a190529dba0e4de3e144b10daabd0da971e11f90dd42",
+        "questionID": null,
+        "question": "Will Uniswap v3 launch before 2021?",
+        "description": "This is a market on if Uniswap v3 will launch before January 1st, 2021, 12:00am EST. “Launch” in this context can be defined as being deployed and usable on the Ethereum mainnet and publicly announced via the official Uniswap Twitter and/or Blog. V3 can be defined as Uniswap v3.0.0 or greater. If Uniswap v3 is officially announced and is deployed on the mainnet of a given L2 scaling solution, with or without some bridging mechanism from Ethereum mainnet, the market will still resolve to \"Yes\".",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "87371.439296",
+        "liquidity": "0",
+        "endDate": "2021-01-01T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401475Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0xb000ca27d1dafadf8a24b2db8390129e8cbdc88312fb89e7f3c17d3465063346",
+        "questionID": null,
+        "question": "Will the Seahawks or the Rams win their week 10 NFL matchup?",
+        "description": "This is a market on which team will win the NFL week 10 matchup between the Seattle Seahawks and the Los Angeles Rams. This game is set to take place on November 15th, 2020 at SoFi Stadium. Whichever team wins this match will see their outcome share resolved accordingly, with winning shares being worth $1 and losing shares being worth $0. In the event this match ends in a tie, post overtime, the market will resolve at 50/50, meaning Seahawks and Rams shares will both be redeemable for $.50. Results of this market will be decided by official scores available on https://www.nfl.com/.",
+        "marketSlug": null,
+        "outcomes": "[\"Seahawks\", \"Rams\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "140094.576395",
+        "liquidity": "0",
+        "endDate": "2020-11-16T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401478Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0xe5cf4bf60005716b8da1ce87c3d5ab12ffe2eadfbcbac22ab39666514131a908",
+        "questionID": null,
+        "question": "Will indoor dining be prohibited in NYC at any point before 2021?",
+        "description": "This market is on if indoor dining will be prohibited in all restaurants in NYC by any written local or state government order, at any point for any duration, before January 1st, 2021, 12:00am EST. This markets conception date is November 13th, 2020, thus any prohibitions or statements prior to today do not count. \n\nThis market is based on the linked Forecast question (https://www.forecastapp.net/q/TWFya2V0OmY1Y0dtQU45NXpr/), and will resolve according to that source. As per the source, the market will resolve to “Yes” if indoor dining is, “prohibited at all restaurants in New York City by any written local or state government order, based on the New York City government website (https://www1.nyc.gov/), other New York State government publication, or another source deemed appropriate by the Forecast team. Otherwise, it will be marked No.”",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0.9999989051848532785897986783046709\", \"0.000001094815146721410201321695329058433\"]",
+        "volume": "195834.468106",
+        "liquidity": "0.000031",
+        "endDate": "2021-01-01T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401480Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x797330e1fc7eac7d4b41dea0643f3565325687a3fda1024273fd261de9256876",
+        "questionID": null,
+        "question": "Will Pfizer's COVID-19 vaccine be the first to receive FDA approval or Emergency Use Authorization (EUA)?",
+        "description": "This is a market on whether Pfizer's COVID-19 vaccine will be the first vaccine to receive regulatory approval in the USA, in the form of either FDA approval OR Emergency Use Authorization, whichever comes first. This market will resolve to “Yes” if Pfizer's COVID-19 vaccine receives FDA approval or EUA, before any other COVID-19 vaccine.  This market will resolve when the first FDA approval or EUA for a COVID-19 vaccine occurs, and if it is for Pfizer's vaccine, this market will resolve to \"Yes\", while if it is for any other vaccine, this market will resolve to \"No\". Note, this market is NOT on if Pfizer's COVID-19 vaccine will be the first FDA approved or the first EUA, but rather if it will be the first vaccine to achieve regulatory approval in either form (FDA approval or EUA). If Pfizer's vaccine gets regulatory approval the same day as 1 or more other vaccines, according to EST, the market will resolve to \"No\", as this means their vaccine is not definitively *first*. \n\nThis market will be resolved in good faith, according to the FDA list of licensed vaccines (https://www.fda.gov/vaccines-blood-biologics/vaccines/vaccines-licensed-use-united-states), the FDA EUA list (https://www.fda.gov/emergency-preparedness-and-response/mcm-legal-regulatory-and-policy-framework/emergency-use-authorization), as well as any other resolution source deemed appropriate by the Markets Integrity Committee (MIC).",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "151822.615733",
+        "liquidity": "0",
+        "endDate": null,
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401483Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0xad0260abe32eefb63e0734f5bca0e7649910a027000ab1a57c0b8ce167ee3763",
+        "questionID": null,
+        "question": "Will Sushiswap have more TVL than Uniswap at any time before November 24th, according to DefiPulse?",
+        "description": "This is a market on if Sushiswap will have more Total Value Locked (TVL) than Uniswap, at any time before November 24th, 2020, 12:00am EST. This market’s inception date is November 18th, 2020, and thus the market conditions can only be satisfied after this date. The market will resolve to “Yes” if, at any time, Sushiswap has a higher overall TVL than Uniswap, and “No” if the end date is reached without this condition being met. \n\nThe resolution condition is being tracked with the DefiPulse API as defined as the following API endpoints (with a valid API key): \n- [https://data-api.defipulse.com/api/v1/defipulse/api/GetHistory?project=uniswap](https://data-api.defipulse.com/api/v1/defipulse/api/GetHistory?project=uniswap)\n- [https://data-api.defipulse.com/api/v1/defipulse/api/GetHistory?project=sushiswap](https://data-api.defipulse.com/api/v1/defipulse/api/GetHistory?project=sushiswap)\n\nThe market will resolve to “Yes” if, for any timestamp after November 18th 2020, these feeds report Sushiswap has a higher overall TVL in USD than Uniswap, and “No” if the end date is reached without this condition being met. If, for any reason, the API feed malfunctions or is unable to report on TVL, this market will be resolved in good faith empirically on the terms that Sushiswap has a higher TVL than Uniswap at any time before the resolution date. In the case of ambiguity in terms of the outcome, the market will be resolved in good faith by the Markets Integrity Committee (MIC).",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "139390.060805",
+        "liquidity": "0",
+        "endDate": "2020-11-24T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401486Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0xb787f500a7b6e105eb6eddcb47df6a6de87ea4f26059e917daea1bbf54c8accb",
+        "questionID": null,
+        "question": "Will $BTC break $20k before Thanksgiving?",
+        "description": "This is a market on if the USD price of Bitcoin $BTC will be above $20,000 at any point before Thanksgiving - defined as before November 26th, 2020, 12:00am EST - according to Coinmarketcap.com/currencies/bitcoin. This market starts on November 18th, 2020. This market will resolve to “Yes” whenever BTC breaks $20,000 according to Coinmarketcap, and if that condition is not met by the resolution date, it will resolve to “No”. In the event of ambiguity in terms of the market outcome, the market will be resolved in good faith at the sole discretion of the Markets Integrity Committee (MIC).",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "457360.180333",
+        "liquidity": "0",
+        "endDate": "2020-11-26T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401488Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x4da97a67cde2c4567fa81229cae80dbf4e286356e0e5dab231846b00f91b0419",
+        "questionID": null,
+        "question": "Will Liverpool beat Leicester City in their Matchday 9 game?",
+        "description": "This is a market on whether Liverpool will be the winner of their Matchday 9 match against Leicester City, scheduled for November 22nd, 2020. If Liverpool wins this match, the market will resolve to \"Yes\". If Liverpool draws or loses, the market will resolve to \"No\". If this match is postponed for whatever reason, this market will not resolve until it takes place. In the event this match is fully cancelled, the market will resolve to 50/50.",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "50163.470657",
+        "liquidity": "0",
+        "endDate": "2020-11-23T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401491Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x953456ca4bc5036ba8c2b4a5d096e484095f4ffcac5531ff2bd3b898f44d29eb",
+        "questionID": null,
+        "question": "Will Deiveson Figueiredo win his UFC 255 match?",
+        "description": "This is a market on whether Deiveson Figueiredo will win his UFC 255 fight against Alex Perez. If Dievson Figueiredo is declared the winner of this bout, either by knockout or by judgement, this market will resolve “Yes.” If Alex Perez is declared the winner, or this fight is declared a draw, this market will resolve to “No”.",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "69325.229436",
+        "liquidity": "0",
+        "endDate": "2020-11-22T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401494Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x84eb28ffdc52f4d4b89c6721f22b05fb77592d85a9f5d4b587ffe3f47c672a0e",
+        "questionID": null,
+        "question": "What will the average sale price of the Jordan 1 Mocha on StockX be on Christmas Day?",
+        "description": "This is a scalar market on the average sale price of the Air Jordan 1 Mocha Men’s Shoe on Christmas day, 2020. The lower bound for this market is $300 and upper bound is $500. This market will resolve based on the StockX page here: https://stockx.com/air-jordan-1-retro-high-dark-mocha. The average sale price will be calculated using the average of the sales from 12:00 PM EST on December 25th, 2020 till 8 PM EST on December 25th, 2020. The average sale price will be computed by taking the simple average (Sum of sale prices in all sizes divided by number of sales that took place within the time period) based on the sales occurring during the previously defined time window at the webpage listed above. All prices denominated in US Dollar.\n\nAs this is a Scalar market, you can use the calculator to the right (underneath the Buy modal) to calculate how each Long or Short Token price corresponds with the Jordan 1 Mocha's average price on that day. Long and Short shares will settle proportionally to the outcome value if the final value is between these bounds, but if the final value exceeds either the upper or lower bound, the price of each Outcome Token is capped at $1 and $0. In the event of ambiguity in terms of the market outcome, the market will be resolved in good faith at the sole discretion of the Markets Integrity Committee (MIC).",
+        "marketSlug": null,
+        "outcomes": "[\"Long\", \"Short\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "21681.539389",
+        "liquidity": "0",
+        "endDate": "2020-12-26T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401497Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0xfd2cee9fee9a5d171aa909dd6a17dba52488dda7754f9791d29d14711583f34e",
+        "questionID": null,
+        "question": "Will Trump Pardon Himself in His First Term?",
+        "description": "This is a market on whether Donald Trump pardon himself during his first term. The linked PredictIt question is the basis for the creation of this market and will be referenced as the leading resolution source, https://www.predictit.org/markets/detail/6453/Will-Trump-pardon-himself-in-his-first-term. This market will resolve when the PredictIt market is resolved, to the same outcome.\n\nPredictit Description:\nDuring his first term, President Donald Trump shall grant a pardon to himself for one or more criminal offences, charges or convictions. Such pardon will be considered to have been granted only if Mr. Trump himself appears on the official list of presidential pardons granted by President Trump, maintained by the U.S. Department of Justice's Office of the Pardon Attorney (available upon launch of this market at https://www.justice.gov/pardon/clemencyrecipients) by 11:59 pm on February 15, 2021 (the “End Date”).\n\nA self-pardon for Mr. Trump that is announced but does not appear on such official list by the End Date shall not be sufficient to cause this market to resolve Yes. Subsequent removal, revocation or legal challenge to such a pardon grant that appears on the official list at any time before the End Date shall have no bearing on the outcome of this market.",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0.0000001031012476847621823888851054148626\", \"0.9999998968987523152378176111148946\"]",
+        "volume": "566518.152363",
+        "liquidity": "99.338559",
+        "endDate": "2021-02-16T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401499Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0xea1cd8e9df99aba5bec306a63074175da203509d7e4a749643da6fc8367e57df",
+        "questionID": null,
+        "question": "Which party will win the U.S. Senate runoff in Georgia? (Ossoff - D vs. Perdue - R)",
+        "description": "This is a market on whether the democratic or republican candidate will win the U.S. Senate runoff in Georgia taking place on January 5th, 2021. Currently, candidates for this election are David Perdue on the Republican ticket, and Jon Ossoff on the Democratic ticket. The linked PredictIt question is the basis for the creation of this market and will be referenced as the leading resolution source, https://www.predictit.org/markets/detail/6651/Which-party-wins-the-regularly-scheduled-2020-US-Senate-election-in-Georgia. This market will resolve when the PredictIt market is resolved, to the same outcome.\n\nDisclaimer: Likely candidates for each party are listed in the outcome names for clarity, however, if for whatever reason the candidates change, this market will be resolved based on the party the winning candidate associates with.",
+        "marketSlug": null,
+        "outcomes": "[\"Dems/Ossoff\", \"Reps/Perdue\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "206128.535439",
+        "liquidity": "0",
+        "endDate": null,
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401502Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0x829b85b2ad61476ce1a92364f1c1c61ad53487b9476d13397ef346beebda1200",
+        "questionID": null,
+        "question": "Which party will win the U.S. Senate special election in Georgia? (Loeffler - R vs Warnock - D)",
+        "description": "This is a market on which party will win the US Senate special election in Georgia, taking place on January 5th, 2021. Currently, the candidates for this election are Kelly Loeffler on the Republican ticket, and Raphael Warnock on the Democratic ticket. If either of these candidates are no longer running, the market will resolve based on which party wins, Republican (Loeffler) or Democratic (Warnock). The linked PredictIt question is the basis for the creation of this market and will be referenced as the leading resolution source, https://www.predictit.org/markets/detail/6567/Which-party-will-win-the-US-Senate-special-election-in-Georgia-in-2020 . This market will resolve when the PredictIt market is resolved, to the same outcome.\n\n\nDisclaimer: Likely candidates for each party are listed in the outcome names, however, if for whatever reason the candidates change, this market will be resolved based on the party the winning candidate associates with.\n",
+        "marketSlug": null,
+        "outcomes": "[\"Dems/Warnock\", \"Reps/Loeffler\"]",
+        "outcomePrices": "[\"0.9999989006962044808924820481886543\", \"0.00000109930379551910751795181134574848\"]",
+        "volume": "237532.290807",
+        "liquidity": "45.370082",
+        "endDate": null,
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401505Z",
+      "event_type": "NewMarket"
+    },
+    {
+      "market": {
+        "conditionId": "0xe71f1c8d994dd447eba467c762f54598b0b0845ab5be4cafe9852bdb94720e57",
+        "questionID": null,
+        "question": "Will Coinbase reach #1 in the Finance category on the US iOS App Store before 2021?",
+        "description": "This is a market on if the Coinbase iOS app will reach #1 in the United States iPhone Apple App Store in the Finance category, under \"Free Apps\". It does not matter how long the app remains #1, if it does for any period of time, this market will resolve to “Yes.” If it does not reach #1 at any point before December 31st, 11:59pm EST 2020, this market will resolve to “No.” This market begins on November 25th, 2020 and will not consider anything prior. To find the Finance chart, click \"Apps\" at the bottom of the iOS App Store app, scroll down to \"Top Free Apps\" and click \"See All\", then tap \"All Apps\" in the top right corner and click \"Finance\", then under \"Free Apps\" in the \"Top Charts\" section, you'll see the list pertinent to this market. The Coinbase iOS app can be found here: https://apps.apple.com/us/app/coinbase-buy-sell-bitcoin/id886427730 . In the case of any ambiguity in terms of the market resolution, it will be resolved in good faith by the Markets Integrity Committee (MIC).",
+        "marketSlug": null,
+        "outcomes": "[\"Yes\", \"No\"]",
+        "outcomePrices": "[\"0\", \"0\"]",
+        "volume": "195420.953091",
+        "liquidity": "0",
+        "endDate": "2021-01-02T00:00:00Z",
+        "active": true,
+        "closed": true
+      },
+      "timestamp": "2025-11-19T05:20:10.401508Z",
+      "event_type": "NewMarket"
+    }
+  ]
+}

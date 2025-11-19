@@ -1,5 +1,5 @@
 use crate::api::PolymarketClient;
-use crate::database::Database;
+use crate::storage::Storage;
 use crate::error::Result;
 use crate::types::{Market, MarketEvent, EventType};
 use log::{info, debug, error, warn};
@@ -10,7 +10,7 @@ use chrono::Utc;
 
 pub struct MarketScanner {
     client: PolymarketClient,
-    database: Option<Arc<Database>>,
+    database: Option<Arc<dyn Storage + Send + Sync>>,
     tracked_markets: HashMap<String, Market>,
 }
 
@@ -25,7 +25,7 @@ impl MarketScanner {
     }
     
     /// 创建带数据库支持的扫描器
-    pub fn with_database(client: PolymarketClient, database: Arc<Database>) -> Self {
+    pub fn with_database(client: PolymarketClient, database: Arc<dyn Storage + Send + Sync>) -> Self {
         Self {
             client,
             database: Some(database),
@@ -37,7 +37,22 @@ impl MarketScanner {
     pub async fn start_scanning(&self, interval: Duration) -> Result<()> {
         info!("开始扫描 Polymarket 市场，扫描间隔: {:?}", interval);
         
-        let mut tracked_markets = self.tracked_markets.clone();
+        // 如果有数据库，先加载已保存的市场
+        let mut tracked_markets = if let Some(db) = &self.database {
+            info!("正在从数据库加载市场数据...");
+            let mut markets = HashMap::new();
+            if let Ok(ids) = db.get_all_market_ids().await {
+                for id in ids {
+                    if let Ok(Some(market)) = db.get_market(&id).await {
+                        markets.insert(id, market);
+                    }
+                }
+            }
+            info!("已加载 {} 个市场", markets.len());
+            markets
+        } else {
+            self.tracked_markets.clone()
+        };
         
         loop {
             match self.scan_markets(&mut tracked_markets).await {
@@ -161,12 +176,22 @@ impl MarketScanner {
                 let db = db.clone();
                 let event = event.clone();
                 async move {
+                    // 用户要求：不要存储 event，只存储市场
+                    /*
                     if let Err(e) = db.save_event(&event).await {
                         error!("保存事件失败: {}", e);
                     }
-                    if let Err(e) = db.save_market(&event.market).await {
-                        error!("保存市场数据失败: {}", e);
+                    */
+                    
+                    // 用户要求：只存储 end=False (未关闭) 的市场
+                    if event.market.closed != Some(true) {
+                        if let Err(e) = db.save_market(&event.market).await {
+                            error!("保存市场数据失败: {}", e);
+                        }
                     }
+                    
+                    // 用户要求：不要存储 event (包括基于 event 的价格历史)
+                    /*
                     // 保存价格历史
                     if matches!(event.event_type, EventType::PriceChange | EventType::NewMarket) {
                         if let Err(e) = db.save_price_history(
@@ -177,6 +202,7 @@ impl MarketScanner {
                             error!("保存价格历史失败: {}", e);
                         }
                     }
+                    */
                 }
             });
         }
@@ -196,6 +222,11 @@ impl MarketScanner {
                     info!("正在保存 {} 个市场到数据库...", markets.len());
                     
                     for market in markets {
+                        // 用户要求：只存储 end=False (未关闭) 的市场
+                        if market.closed == Some(true) {
+                            continue;
+                        }
+                        
                         if let Err(e) = db.save_market(&market).await {
                             error!("保存市场失败 [{}]: {}", market.condition_id, e);
                         } else {

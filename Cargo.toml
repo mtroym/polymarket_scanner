@@ -29,6 +29,10 @@ dotenv = "0.15"
 redis = { version = "0.24", features = ["tokio-comp", "connection-manager"] }
 # 异步互斥锁
 parking_lot = "0.12"
+# 异步 Trait
+async-trait = "0.1"
+# SQLite 数据库
+sqlx = { version = "0.7", features = ["runtime-tokio", "sqlite"] }
 
 [dev-dependencies]
 tokio-test = "0.4"
