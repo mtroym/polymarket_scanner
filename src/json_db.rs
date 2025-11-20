@@ -1,6 +1,6 @@
 use crate::error::{Result, ScannerError};
 use crate::storage::Storage;
-use crate::types::{Market, MarketEvent, EventType};
+use crate::types::{EventType, Market, MarketEvent};
 use async_trait::async_trait;
 use chrono::{DateTime, Utc};
 use log::info;
@@ -42,36 +42,42 @@ impl JsonDatabase {
         let file_path = self.base_path.join(filename);
         let temp_path = self.base_path.join(format!("{}.tmp", filename));
 
-        let json = serde_json::to_string_pretty(data)
-            .map_err(|e| ScannerError::JsonError(e))?;
+        let json = serde_json::to_string_pretty(data).map_err(|e| ScannerError::JsonError(e))?;
 
-        let mut file = fs::File::create(&temp_path).await
+        let mut file = fs::File::create(&temp_path)
+            .await
             .map_err(|e| ScannerError::ConfigError(format!("Failed to create temp file: {}", e)))?;
-        
-        file.write_all(json.as_bytes()).await
-            .map_err(|e| ScannerError::ConfigError(format!("Failed to write to temp file: {}", e)))?;
-        
-        file.flush().await
+
+        file.write_all(json.as_bytes()).await.map_err(|e| {
+            ScannerError::ConfigError(format!("Failed to write to temp file: {}", e))
+        })?;
+
+        file.flush()
+            .await
             .map_err(|e| ScannerError::ConfigError(format!("Failed to flush temp file: {}", e)))?;
 
-        fs::rename(&temp_path, &file_path).await
+        fs::rename(&temp_path, &file_path)
+            .await
             .map_err(|e| ScannerError::ConfigError(format!("Failed to rename temp file: {}", e)))?;
 
         Ok(())
     }
 
-    async fn load_from_file<T: for<'a> Deserialize<'a>>(&self, filename: &str) -> Result<Option<T>> {
+    async fn load_from_file<T: for<'a> Deserialize<'a>>(
+        &self,
+        filename: &str,
+    ) -> Result<Option<T>> {
         let file_path = self.base_path.join(filename);
-        
+
         if !file_path.exists() {
             return Ok(None);
         }
 
-        let content = fs::read_to_string(&file_path).await
+        let content = fs::read_to_string(&file_path)
+            .await
             .map_err(|e| ScannerError::ConfigError(format!("Failed to read file: {}", e)))?;
 
-        let data = serde_json::from_str(&content)
-            .map_err(|e| ScannerError::JsonError(e))?;
+        let data = serde_json::from_str(&content).map_err(|e| ScannerError::JsonError(e))?;
 
         Ok(Some(data))
     }
@@ -81,8 +87,9 @@ impl JsonDatabase {
 impl Storage for JsonDatabase {
     async fn init(&self) -> Result<()> {
         if !self.base_path.exists() {
-            fs::create_dir_all(&self.base_path).await
-                .map_err(|e| ScannerError::ConfigError(format!("Failed to create data directory: {}", e)))?;
+            fs::create_dir_all(&self.base_path).await.map_err(|e| {
+                ScannerError::ConfigError(format!("Failed to create data directory: {}", e))
+            })?;
         }
 
         // Load markets
@@ -100,9 +107,9 @@ impl Storage for JsonDatabase {
         }
 
         // Load history (simplified: just keeping in memory for now or implement separate file per market later)
-        // For this MVP, we'll skip loading history from disk to keep it simple, 
+        // For this MVP, we'll skip loading history from disk to keep it simple,
         // or we could implement a simple history.json if needed.
-        
+
         Ok(())
     }
 
@@ -113,9 +120,11 @@ impl Storage for JsonDatabase {
         } // drop lock
 
         let markets = self.markets.read().await;
-        let data = MarketData { markets: markets.clone() };
+        let data = MarketData {
+            markets: markets.clone(),
+        };
         self.save_to_file("markets.json", &data).await?;
-        
+
         Ok(())
     }
 
@@ -130,7 +139,9 @@ impl Storage for JsonDatabase {
         } // drop lock
 
         let events = self.events.read().await;
-        let data = EventData { events: events.clone() };
+        let data = EventData {
+            events: events.clone(),
+        };
         self.save_to_file("events.json", &data).await?;
 
         Ok(())
@@ -139,28 +150,30 @@ impl Storage for JsonDatabase {
     async fn save_price_history(
         &self,
         condition_id: &str,
-        outcome_prices: &str,
+        outcome_prices: Option<&str>,
         volume: Option<&str>,
     ) -> Result<()> {
         let mut history = self.price_history.write().await;
-        let entry = history.entry(condition_id.to_string()).or_insert_with(Vec::new);
-        
+        let entry = history
+            .entry(condition_id.to_string())
+            .or_insert_with(Vec::new);
+
         entry.push((
-            outcome_prices.to_string(),
+            outcome_prices.unwrap_or("").to_string(),
             volume.unwrap_or("").to_string(),
-            Utc::now()
+            Utc::now(),
         ));
-        
+
         // Keep only last 1000 entries
         if entry.len() > 1000 {
             entry.remove(0);
         }
 
         // Note: For a full implementation, we would save this to disk too.
-        // For now, we'll just keep it in memory as per the "simple" requirement, 
+        // For now, we'll just keep it in memory as per the "simple" requirement,
         // or we could dump all history to a big json file, but that might be slow.
         // Let's stick to in-memory for history for this iteration unless requested otherwise.
-        
+
         Ok(())
     }
 
@@ -202,22 +215,26 @@ impl Storage for JsonDatabase {
         } else {
             0
         };
-        
-        let result = events[start..].iter().rev().map(|e| {
-            let event_type_str = match e.event_type {
-                EventType::NewMarket => "NewMarket",
-                EventType::PriceChange => "PriceChange",
-                EventType::VolumeUpdate => "VolumeUpdate",
-                EventType::MarketClosed => "MarketClosed",
-            };
-            (
-                event_type_str.to_string(),
-                e.market.question.clone(),
-                e.market.outcome_prices.clone(),
-                e.timestamp
-            )
-        }).collect();
-        
+
+        let result = events[start..]
+            .iter()
+            .rev()
+            .map(|e| {
+                let event_type_str = match e.event_type {
+                    EventType::NewMarket => "NewMarket",
+                    EventType::PriceChange => "PriceChange",
+                    EventType::VolumeUpdate => "VolumeUpdate",
+                    EventType::MarketClosed => "MarketClosed",
+                };
+                (
+                    event_type_str.to_string(),
+                    e.market.question.clone(),
+                    e.market.outcome_prices.clone().unwrap_or_default(),
+                    e.timestamp,
+                )
+            })
+            .collect();
+
         Ok(result)
     }
 
@@ -234,7 +251,7 @@ impl Storage for JsonDatabase {
     async fn get_event_stats(&self) -> Result<HashMap<String, i64>> {
         let events = self.events.read().await;
         let mut stats = HashMap::new();
-        
+
         for event in events.iter() {
             let event_type_str = match event.event_type {
                 EventType::NewMarket => "NewMarket",
@@ -244,7 +261,7 @@ impl Storage for JsonDatabase {
             };
             *stats.entry(event_type_str.to_string()).or_insert(0) += 1;
         }
-        
+
         stats.insert("Total".to_string(), events.len() as i64);
         Ok(stats)
     }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polymarket Scanner - Markets</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Polymarket Scanner</h1>
+            <div class="stats">
+                <span>Total Markets: <strong id="market-count">0</strong></span>
+                <span>Last Updated: <strong id="last-updated">-</strong></span>
+            </div>
+        </header>
+        
+        <div class="controls">
+            <input type="text" id="search" placeholder="Search markets...">
+            <button id="refresh-btn">Refresh Data</button>
+        </div>
+
+        <div id="markets-list" class="markets-grid">
+            <!-- Markets will be inserted here -->
+            <div class="loading">Loading markets data...</div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
