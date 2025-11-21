@@ -1,12 +1,11 @@
 use crate::error::{Result, ScannerError};
 use crate::storage::Storage;
-use crate::types::{EventType, Market, MarketEvent};
+use crate::types::Market;
 use async_trait::async_trait;
 use chrono::{DateTime, Utc};
-use log::{debug, info};
+use log::info;
 use sqlx::sqlite::{SqlitePool, SqlitePoolOptions};
 use sqlx::Row;
-use std::collections::HashMap;
 
 pub struct Database {
     pool: SqlitePool,
@@ -60,28 +59,6 @@ impl Storage for Database {
         .await
         .map_err(|e| ScannerError::ConfigError(format!("创建 markets 表失败: {}", e)))?;
 
-        // 创建市场事件表
-        sqlx::query(
-            r#"
-            CREATE TABLE IF NOT EXISTS market_events (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                condition_id TEXT NOT NULL,
-                event_type TEXT NOT NULL,
-                question TEXT NOT NULL,
-                outcomes TEXT,
-                outcome_prices TEXT,
-                volume TEXT,
-                liquidity TEXT,
-                timestamp TEXT NOT NULL,
-                created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (condition_id) REFERENCES markets(condition_id)
-            )
-            "#,
-        )
-        .execute(&self.pool)
-        .await
-        .map_err(|e| ScannerError::ConfigError(format!("创建 market_events 表失败: {}", e)))?;
-
         // 创建价格历史表
         sqlx::query(
             r#"
@@ -106,18 +83,6 @@ impl Storage for Database {
             .await
             .ok();
 
-        sqlx::query(
-            "CREATE INDEX IF NOT EXISTS idx_events_condition_id ON market_events(condition_id)",
-        )
-        .execute(&self.pool)
-        .await
-        .ok();
-
-        sqlx::query("CREATE INDEX IF NOT EXISTS idx_events_timestamp ON market_events(timestamp)")
-            .execute(&self.pool)
-            .await
-            .ok();
-
         sqlx::query("CREATE INDEX IF NOT EXISTS idx_price_history_condition_id ON price_history(condition_id)")
             .execute(&self.pool)
             .await
@@ -127,123 +92,97 @@ impl Storage for Database {
         Ok(())
     }
 
-    /// 保存或更新市场数据
     async fn save_market(&self, market: &Market) -> Result<()> {
-        let now = Utc::now().to_rfc3339();
-
-        // 检查市场是否已存在
-        let exists: bool =
-            sqlx::query("SELECT EXISTS(SELECT 1 FROM markets WHERE condition_id = ?)")
-                .bind(&market.condition_id)
-                .fetch_one(&self.pool)
-                .await
-                .map(|row| row.get(0))
-                .unwrap_or(false);
-
-        if exists {
-            // 更新现有市场
-            sqlx::query(
-                r#"
-                UPDATE markets SET
-                    question_id = ?,
-                    question = ?,
-                    description = ?,
-                    market_slug = ?,
-                    outcomes = ?,
-                    outcome_prices = ?,
-                    volume = ?,
-                    liquidity = ?,
-                    end_date = ?,
-                    active = ?,
-                    closed = ?,
-                    last_updated_at = ?
-                WHERE condition_id = ?
-                "#,
-            )
-            .bind(&market.question_id)
-            .bind(&market.question)
-            .bind(&market.description)
-            .bind(&market.market_slug)
-            .bind(&market.market_slug)
-            .bind(&market.outcomes)
-            .bind(market.outcome_prices.as_deref().unwrap_or(""))
-            .bind(&market.volume)
-            .bind(&market.liquidity)
-            .bind(&market.end_date)
-            .bind(market.active.map(|b| b as i32))
-            .bind(market.closed.map(|b| b as i32))
-            .bind(&now)
-            .bind(&market.condition_id)
-            .execute(&self.pool)
-            .await
-            .map_err(|e| ScannerError::ConfigError(format!("更新市场失败: {}", e)))?;
-
-            debug!("更新市场: {}", market.condition_id);
-        } else {
-            // 插入新市场
-            sqlx::query(
-                r#"
-                INSERT INTO markets (
-                    condition_id, question_id, question, description, market_slug,
-                    outcomes, outcome_prices, volume, liquidity, end_date,
-                    active, closed, first_seen_at, last_updated_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                "#,
-            )
-            .bind(&market.condition_id)
-            .bind(&market.question_id)
-            .bind(&market.question)
-            .bind(&market.description)
-            .bind(&market.market_slug)
-            .bind(&market.outcomes)
-            .bind(market.outcome_prices.as_deref().unwrap_or(""))
-            .bind(&market.volume)
-            .bind(&market.liquidity)
-            .bind(&market.end_date)
-            .bind(market.active.map(|b| b as i32))
-            .bind(market.closed.map(|b| b as i32))
-            .bind(&now)
-            .bind(&now)
-            .execute(&self.pool)
-            .await
-            .map_err(|e| ScannerError::ConfigError(format!("插入市场失败: {}", e)))?;
-
-            info!("保存新市场: {}", market.question);
-        }
-
-        Ok(())
+        self.save_markets(vec![market.clone()]).await
     }
 
-    /// 保存市场事件
-    async fn save_event(&self, event: &MarketEvent) -> Result<()> {
-        let event_type_str = match event.event_type {
-            EventType::NewMarket => "NewMarket",
-            EventType::PriceChange => "PriceChange",
-            EventType::VolumeUpdate => "VolumeUpdate",
-            EventType::MarketClosed => "MarketClosed",
-        };
+    async fn save_markets(&self, markets: Vec<Market>) -> Result<()> {
+        let mut tx = self.pool.begin().await.map_err(|e| {
+            ScannerError::ConfigError(format!("Failed to start transaction: {}", e))
+        })?;
+        let now = Utc::now().to_rfc3339();
 
-        sqlx::query(
-            r#"
-            INSERT INTO market_events (
-                condition_id, event_type, question, outcomes, outcome_prices,
-                volume, liquidity, timestamp
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            "#,
-        )
-        .bind(&event.market.condition_id)
-        .bind(event_type_str)
-        .bind(&event.market.question)
-        .bind(&event.market.outcomes)
-        .bind(event.market.outcome_prices.as_deref().unwrap_or(""))
-        .bind(&event.market.volume)
-        .bind(&event.market.liquidity)
-        .bind(event.timestamp.to_rfc3339())
-        .execute(&self.pool)
-        .await
-        .map_err(|e| ScannerError::ConfigError(format!("保存事件失败: {}", e)))?;
+        for market in markets {
+            // 检查市场是否已存在
+            let exists: bool =
+                sqlx::query("SELECT EXISTS(SELECT 1 FROM markets WHERE condition_id = ?)")
+                    .bind(&market.condition_id)
+                    .fetch_one(&mut *tx)
+                    .await
+                    .map(|row| row.get(0))
+                    .unwrap_or(false);
 
-        debug!("保存事件: {} - {}", event_type_str, event.market.question);
+            if exists {
+                // 更新现有市场
+                sqlx::query(
+                    r#"
+                    UPDATE markets SET
+                        question_id = ?,
+                        question = ?,
+                        description = ?,
+                        market_slug = ?,
+                        outcomes = ?,
+                        outcome_prices = ?,
+                        volume = ?,
+                        liquidity = ?,
+                        end_date = ?,
+                        active = ?,
+                        closed = ?,
+                        last_updated_at = ?
+                    WHERE condition_id = ?
+                    "#,
+                )
+                .bind(&market.question_id)
+                .bind(&market.question)
+                .bind(&market.description)
+                .bind(&market.market_slug)
+                .bind(&market.outcomes)
+                .bind(market.outcome_prices.as_deref().unwrap_or(""))
+                .bind(&market.volume)
+                .bind(&market.liquidity)
+                .bind(&market.end_date)
+                .bind(market.active.map(|b| b as i32))
+                .bind(market.closed.map(|b| b as i32))
+                .bind(&now)
+                .bind(&market.condition_id)
+                .execute(&mut *tx)
+                .await
+                .map_err(|e| ScannerError::ConfigError(format!("更新市场失败: {}", e)))?;
+            } else {
+                // 插入新市场
+                sqlx::query(
+                    r#"
+                    INSERT INTO markets (
+                        condition_id, question_id, question, description, market_slug,
+                        outcomes, outcome_prices, volume, liquidity, end_date,
+                        active, closed, first_seen_at, last_updated_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    "#,
+                )
+                .bind(&market.condition_id)
+                .bind(&market.question_id)
+                .bind(&market.question)
+                .bind(&market.description)
+                .bind(&market.market_slug)
+                .bind(&market.outcomes)
+                .bind(market.outcome_prices.as_deref().unwrap_or(""))
+                .bind(&market.volume)
+                .bind(&market.liquidity)
+                .bind(&market.end_date)
+                .bind(market.active.map(|b| b as i32))
+                .bind(market.closed.map(|b| b as i32))
+                .bind(&now)
+                .bind(&now)
+                .execute(&mut *tx)
+                .await
+                .map_err(|e| ScannerError::ConfigError(format!("插入市场失败: {}", e)))?;
+            }
+        }
+
+        tx.commit().await.map_err(|e| {
+            ScannerError::ConfigError(format!("Failed to commit transaction: {}", e))
+        })?;
+
         Ok(())
     }
 
@@ -279,16 +218,6 @@ impl Storage for Database {
             .fetch_one(&self.pool)
             .await
             .map_err(|e| ScannerError::ConfigError(format!("查询市场总数失败: {}", e)))?;
-
-        Ok(count.0)
-    }
-
-    /// 获取事件总数
-    async fn get_event_count(&self) -> Result<i64> {
-        let count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM market_events")
-            .fetch_one(&self.pool)
-            .await
-            .map_err(|e| ScannerError::ConfigError(format!("查询事件总数失败: {}", e)))?;
 
         Ok(count.0)
     }
@@ -329,40 +258,6 @@ impl Storage for Database {
         Ok(history)
     }
 
-    /// 获取最近的事件
-    async fn get_recent_events(
-        &self,
-        limit: i32,
-    ) -> Result<Vec<(String, String, String, DateTime<Utc>)>> {
-        let rows = sqlx::query(
-            r#"
-            SELECT event_type, question, outcome_prices, timestamp
-            FROM market_events
-            ORDER BY timestamp DESC
-            LIMIT ?
-            "#,
-        )
-        .bind(limit)
-        .fetch_all(&self.pool)
-        .await
-        .map_err(|e| ScannerError::ConfigError(format!("查询最近事件失败: {}", e)))?;
-
-        let mut events = Vec::new();
-        for row in rows {
-            let event_type: String = row.get("event_type");
-            let question: String = row.get("question");
-            let prices: Option<String> = row.get("outcome_prices");
-            let timestamp_str: String = row.get("timestamp");
-            let timestamp = DateTime::parse_from_rfc3339(&timestamp_str)
-                .unwrap_or_else(|_| DateTime::parse_from_rfc3339("2024-01-01T00:00:00Z").unwrap())
-                .with_timezone(&Utc);
-
-            events.push((event_type, question, prices.unwrap_or_default(), timestamp));
-        }
-
-        Ok(events)
-    }
-
     /// 获取市场详情
     async fn get_market(&self, condition_id: &str) -> Result<Option<Market>> {
         let row = sqlx::query("SELECT * FROM markets WHERE condition_id = ?")
@@ -401,28 +296,5 @@ impl Storage for Database {
 
         let ids = rows.iter().map(|row| row.get("condition_id")).collect();
         Ok(ids)
-    }
-
-    /// 获取事件统计
-    async fn get_event_stats(&self) -> Result<HashMap<String, i64>> {
-        let rows = sqlx::query(
-            "SELECT event_type, COUNT(*) as count FROM market_events GROUP BY event_type",
-        )
-        .fetch_all(&self.pool)
-        .await
-        .map_err(|e| ScannerError::ConfigError(format!("获取事件统计失败: {}", e)))?;
-
-        let mut stats = HashMap::new();
-        let mut total = 0;
-
-        for row in rows {
-            let event_type: String = row.get("event_type");
-            let count: i64 = row.get("count");
-            stats.insert(event_type, count);
-            total += count;
-        }
-
-        stats.insert("Total".to_string(), total);
-        Ok(stats)
     }
 }

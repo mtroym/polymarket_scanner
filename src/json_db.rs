@@ -1,6 +1,6 @@
 use crate::error::{Result, ScannerError};
 use crate::storage::Storage;
-use crate::types::{EventType, Market, MarketEvent};
+use crate::types::Market;
 use async_trait::async_trait;
 use chrono::{DateTime, Utc};
 use log::info;
@@ -16,15 +16,9 @@ struct MarketData {
     markets: HashMap<String, Market>,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
-struct EventData {
-    events: Vec<MarketEvent>,
-}
-
 pub struct JsonDatabase {
     base_path: PathBuf,
     markets: RwLock<HashMap<String, Market>>,
-    events: RwLock<Vec<MarketEvent>>,
     price_history: RwLock<HashMap<String, Vec<(String, String, DateTime<Utc>)>>>,
 }
 
@@ -33,7 +27,6 @@ impl JsonDatabase {
         Self {
             base_path: path.as_ref().to_path_buf(),
             markets: RwLock::new(HashMap::new()),
-            events: RwLock::new(Vec::new()),
             price_history: RwLock::new(HashMap::new()),
         }
     }
@@ -99,13 +92,6 @@ impl Storage for JsonDatabase {
             info!("Loaded {} markets from disk", markets.len());
         }
 
-        // Load events
-        if let Some(data) = self.load_from_file::<EventData>("events.json").await? {
-            let mut events = self.events.write().await;
-            *events = data.events;
-            info!("Loaded {} events from disk", events.len());
-        }
-
         // Load history (simplified: just keeping in memory for now or implement separate file per market later)
         // For this MVP, we'll skip loading history from disk to keep it simple,
         // or we could implement a simple history.json if needed.
@@ -114,35 +100,22 @@ impl Storage for JsonDatabase {
     }
 
     async fn save_market(&self, market: &Market) -> Result<()> {
-        {
-            let mut markets = self.markets.write().await;
-            markets.insert(market.condition_id.clone(), market.clone());
-        } // drop lock
-
-        let markets = self.markets.read().await;
-        let data = MarketData {
-            markets: markets.clone(),
-        };
-        self.save_to_file("markets.json", &data).await?;
-
-        Ok(())
+        self.save_markets(vec![market.clone()]).await
     }
 
-    async fn save_event(&self, event: &MarketEvent) -> Result<()> {
+    async fn save_markets(&self, markets: Vec<Market>) -> Result<()> {
         {
-            let mut events = self.events.write().await;
-            events.push(event.clone());
-            // Keep only last 1000 events
-            if events.len() > 1000 {
-                events.remove(0);
+            let mut markets_map = self.markets.write().await;
+            for market in markets {
+                markets_map.insert(market.condition_id.clone(), market);
             }
         } // drop lock
 
-        let events = self.events.read().await;
-        let data = EventData {
-            events: events.clone(),
+        let markets_map = self.markets.read().await;
+        let data = MarketData {
+            markets: markets_map.clone(),
         };
-        self.save_to_file("events.json", &data).await?;
+        self.save_to_file("markets.json", &data).await?;
 
         Ok(())
     }
@@ -182,11 +155,6 @@ impl Storage for JsonDatabase {
         Ok(markets.len() as i64)
     }
 
-    async fn get_event_count(&self) -> Result<i64> {
-        let events = self.events.read().await;
-        Ok(events.len() as i64)
-    }
-
     async fn get_price_history(
         &self,
         condition_id: &str,
@@ -205,39 +173,6 @@ impl Storage for JsonDatabase {
         }
     }
 
-    async fn get_recent_events(
-        &self,
-        limit: i32,
-    ) -> Result<Vec<(String, String, String, DateTime<Utc>)>> {
-        let events = self.events.read().await;
-        let start = if events.len() > limit as usize {
-            events.len() - limit as usize
-        } else {
-            0
-        };
-
-        let result = events[start..]
-            .iter()
-            .rev()
-            .map(|e| {
-                let event_type_str = match e.event_type {
-                    EventType::NewMarket => "NewMarket",
-                    EventType::PriceChange => "PriceChange",
-                    EventType::VolumeUpdate => "VolumeUpdate",
-                    EventType::MarketClosed => "MarketClosed",
-                };
-                (
-                    event_type_str.to_string(),
-                    e.market.question.clone(),
-                    e.market.outcome_prices.clone().unwrap_or_default(),
-                    e.timestamp,
-                )
-            })
-            .collect();
-
-        Ok(result)
-    }
-
     async fn get_market(&self, condition_id: &str) -> Result<Option<Market>> {
         let markets = self.markets.read().await;
         Ok(markets.get(condition_id).cloned())
@@ -246,23 +181,5 @@ impl Storage for JsonDatabase {
     async fn get_all_market_ids(&self) -> Result<Vec<String>> {
         let markets = self.markets.read().await;
         Ok(markets.keys().cloned().collect())
-    }
-
-    async fn get_event_stats(&self) -> Result<HashMap<String, i64>> {
-        let events = self.events.read().await;
-        let mut stats = HashMap::new();
-
-        for event in events.iter() {
-            let event_type_str = match event.event_type {
-                EventType::NewMarket => "NewMarket",
-                EventType::PriceChange => "PriceChange",
-                EventType::VolumeUpdate => "VolumeUpdate",
-                EventType::MarketClosed => "MarketClosed",
-            };
-            *stats.entry(event_type_str.to_string()).or_insert(0) += 1;
-        }
-
-        stats.insert("Total".to_string(), events.len() as i64);
-        Ok(stats)
     }
 }

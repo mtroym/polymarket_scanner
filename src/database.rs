@@ -1,9 +1,9 @@
 use crate::error::{Result, ScannerError};
 use crate::storage::Storage;
-use crate::types::{EventType, Market, MarketEvent};
+use crate::types::Market;
 use async_trait::async_trait;
 use chrono::{DateTime, Utc};
-use log::{debug, info};
+use log::info;
 use redis::aio::ConnectionManager;
 use redis::AsyncCommands;
 
@@ -51,29 +51,35 @@ impl Storage for Database {
 
     /// 保存或更新市场数据
     async fn save_market(&self, market: &Market) -> Result<()> {
+        self.save_markets(vec![market.clone()]).await
+    }
+
+    async fn save_markets(&self, markets: Vec<Market>) -> Result<()> {
         let mut conn = self.conn.clone();
-        let key = format!("market:{}", market.condition_id);
+        let mut pipe = redis::pipe();
         let now = Utc::now().to_rfc3339();
 
-        // 检查市场是否已存在
-        let exists: bool = conn
-            .exists(&key)
-            .await
-            .map_err(|e| ScannerError::ConfigError(format!("Redis 查询失败: {}", e)))?;
+        for market in markets {
+            let key = format!("market:{}", market.condition_id);
 
-        let first_seen = if exists {
-            // 获取原有的 first_seen_at
-            conn.hget::<_, _, Option<String>>(&key, "first_seen_at")
-                .await
-                .unwrap_or(Some(now.clone()))
-                .unwrap_or_else(|| now.clone())
-        } else {
-            now.clone()
-        };
+            // Note: In a pipeline, we can't easily check for existence and conditionally update
+            // 'first_seen_at' without a Lua script or multiple round trips.
+            // For simplicity and performance in batch mode, we'll assume 'first_seen_at' is 'now'
+            // if not present, or we could fetch all keys first (but that's slow).
+            // Alternatively, we can use HSETNX for 'first_seen_at' if we want to preserve it,
+            // but HSETNX is for a single field.
+            // Let's just set 'first_seen_at' to 'now' if it's a new market.
+            // Actually, Redis HSET overwrites. To preserve 'first_seen_at', we'd need to read it.
+            // Reading in a loop is bad.
+            // Optimization: Just set 'last_updated_at'. If we really need 'first_seen_at',
+            // we should use HSETNX for that specific field in a separate command or assume the caller handles it.
+            // Given the constraints, let's just write everything. If 'first_seen_at' is overwritten, so be it for now,
+            // or we can try to read it if we want to be perfect, but batching is about speed.
+            // Let's stick to the previous logic but adapted for pipeline?
+            // No, previous logic did a read for every market. That defeats the purpose of batching.
+            // Let's just write. If we want to preserve 'first_seen_at', we can use HSETNX for it.
 
-        // 使用 Hash 存储市场数据
-        let _: () = conn
-            .hset_multiple(
+            pipe.hset_multiple(
                 &key,
                 &[
                     ("condition_id", market.condition_id.as_str()),
@@ -103,72 +109,22 @@ impl Storage for Database {
                             .map(|b| if b { "1" } else { "0" })
                             .unwrap_or("0"),
                     ),
-                    ("first_seen_at", &first_seen),
                     ("last_updated_at", &now),
                 ],
-            )
-            .await
-            .map_err(|e| ScannerError::ConfigError(format!("保存市场失败: {}", e)))?;
+            );
 
-        // 添加到市场列表集合
-        let _: () = conn
-            .sadd("markets:all", &market.condition_id)
-            .await
-            .map_err(|e| ScannerError::ConfigError(format!("添加到市场集合失败: {}", e)))?;
+            // Use HSETNX for first_seen_at to only set it if it doesn't exist
+            pipe.hset_nx(&key, "first_seen_at", &now);
 
-        if !exists {
-            info!("保存新市场: {}", market.question);
-        } else {
-            debug!("更新市场: {}", market.condition_id);
+            // Add to set
+            pipe.sadd("markets:all", &market.condition_id);
         }
 
-        Ok(())
-    }
-
-    /// 保存市场事件
-    async fn save_event(&self, event: &MarketEvent) -> Result<()> {
-        let mut conn = self.conn.clone();
-
-        let event_type_str = match event.event_type {
-            EventType::NewMarket => "NewMarket",
-            EventType::PriceChange => "PriceChange",
-            EventType::VolumeUpdate => "VolumeUpdate",
-            EventType::MarketClosed => "MarketClosed",
-        };
-
-        // 事件数据序列化为 JSON
-        let event_data = serde_json::json!({
-            "condition_id": event.market.condition_id,
-            "event_type": event_type_str,
-            "question": event.market.question,
-            "outcomes": event.market.outcomes,
-            "outcome_prices": event.market.outcome_prices,
-            "volume": event.market.volume,
-            "liquidity": event.market.liquidity,
-            "timestamp": event.timestamp.to_rfc3339(),
-        });
-
-        let event_json =
-            serde_json::to_string(&event_data).map_err(|e| ScannerError::JsonError(e))?;
-
-        // 添加到全局事件列表（保留最近 1000 条）
-        let _: () = conn
-            .lpush("events:recent", &event_json)
+        let _: () = pipe
+            .query_async(&mut conn)
             .await
-            .map_err(|e| ScannerError::ConfigError(format!("保存事件失败: {}", e)))?;
+            .map_err(|e| ScannerError::ConfigError(format!("Batch save markets failed: {}", e)))?;
 
-        let _: () = conn
-            .ltrim("events:recent", 0, 999)
-            .await
-            .map_err(|e| ScannerError::ConfigError(format!("修剪事件列表失败: {}", e)))?;
-
-        // 增加事件计数器
-        let counter_key = format!("stats:events:{}", event_type_str);
-        let _ = conn.incr::<_, _, i64>(&counter_key, 1).await.ok();
-
-        let _ = conn.incr::<_, _, i64>("stats:events:total", 1).await.ok();
-
-        // debug!("保存事件: {} - {}", event_type_str, event.market.question);
         Ok(())
     }
 
@@ -214,14 +170,6 @@ impl Storage for Database {
         Ok(count)
     }
 
-    /// 获取事件总数
-    async fn get_event_count(&self) -> Result<i64> {
-        let mut conn = self.conn.clone();
-        let count: i64 = conn.get("stats:events:total").await.unwrap_or(0);
-
-        Ok(count)
-    }
-
     /// 获取特定市场的价格历史
     async fn get_price_history(
         &self,
@@ -255,39 +203,6 @@ impl Storage for Database {
         }
 
         Ok(history)
-    }
-
-    /// 获取最近的事件
-    async fn get_recent_events(
-        &self,
-        limit: i32,
-    ) -> Result<Vec<(String, String, String, DateTime<Utc>)>> {
-        let mut conn = self.conn.clone();
-
-        let results: Vec<String> = conn
-            .lrange("events:recent", 0, (limit - 1) as isize)
-            .await
-            .map_err(|e| ScannerError::ConfigError(format!("查询最近事件失败: {}", e)))?;
-
-        let mut events = Vec::new();
-        for json_str in results {
-            if let Ok(data) = serde_json::from_str::<serde_json::Value>(&json_str) {
-                let event_type = data["event_type"].as_str().unwrap_or("").to_string();
-                let question = data["question"].as_str().unwrap_or("").to_string();
-                let prices = data["outcome_prices"].as_str().unwrap_or("").to_string();
-                let timestamp_str = data["timestamp"].as_str().unwrap_or("");
-
-                let timestamp = DateTime::parse_from_rfc3339(timestamp_str)
-                    .unwrap_or_else(|_| {
-                        DateTime::parse_from_rfc3339("2024-01-01T00:00:00Z").unwrap()
-                    })
-                    .with_timezone(&Utc);
-
-                events.push((event_type, question, prices, timestamp));
-            }
-        }
-
-        Ok(events)
     }
 
     /// 获取市场详情
@@ -380,24 +295,5 @@ impl Storage for Database {
             .map_err(|e| ScannerError::ConfigError(format!("获取市场列表失败: {}", e)))?;
 
         Ok(ids)
-    }
-
-    /// 获取事件统计
-    async fn get_event_stats(&self) -> Result<std::collections::HashMap<String, i64>> {
-        let mut conn = self.conn.clone();
-        let mut stats = std::collections::HashMap::new();
-
-        let event_types = ["NewMarket", "PriceChange", "VolumeUpdate", "MarketClosed"];
-
-        for event_type in &event_types {
-            let key = format!("stats:events:{}", event_type);
-            let count: i64 = conn.get(&key).await.unwrap_or(0);
-            stats.insert(event_type.to_string(), count);
-        }
-
-        let total: i64 = conn.get("stats:events:total").await.unwrap_or(0);
-        stats.insert("Total".to_string(), total);
-
-        Ok(stats)
     }
 }

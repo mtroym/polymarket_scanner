@@ -178,33 +178,12 @@ impl MarketScanner {
                 let db = db.clone();
                 let event = event.clone();
                 async move {
-                    // 用户要求：不要存储 event，只存储市场
-                    /*
-                    if let Err(e) = db.save_event(&event).await {
-                        error!("保存事件失败: {}", e);
-                    }
-                    */
-
                     // 用户要求：只存储 end=False (未关闭) 的市场
                     if event.market.closed != Some(true) {
                         if let Err(e) = db.save_market(&event.market).await {
                             error!("保存市场数据失败: {}", e);
                         }
                     }
-
-                    // 用户要求：不要存储 event (包括基于 event 的价格历史)
-                    /*
-                    // 保存价格历史
-                    if matches!(event.event_type, EventType::PriceChange | EventType::NewMarket) {
-                        if let Err(e) = db.save_price_history(
-                            &event.market.condition_id,
-                            event.market.outcome_prices.as_deref(),
-                            event.market.volume.as_deref()
-                        ).await {
-                            error!("保存价格历史失败: {}", e);
-                        }
-                    }
-                    */
                 }
             });
         }
@@ -225,16 +204,20 @@ impl MarketScanner {
                     if let Some(db) = db {
                         info!("正在保存 {} 个市场到数据库...", markets.len());
 
+                        let mut markets_to_save = Vec::new();
                         for market in markets {
                             // 用户要求：只存储 end=False (未关闭) 的市场
                             if market.closed == Some(true) {
                                 continue;
                             }
+                            markets_to_save.push(market);
+                        }
 
-                            if let Err(e) = db.save_market(&market).await {
-                                error!("保存市场失败 [{}]: {}", market.condition_id, e);
+                        if !markets_to_save.is_empty() {
+                            if let Err(e) = db.save_markets(markets_to_save).await {
+                                error!("批量保存市场失败: {}", e);
                             } else {
-                                debug!("已保存市场: {}", market.question);
+                                debug!("已批量保存市场");
                             }
                         }
                     } else {
